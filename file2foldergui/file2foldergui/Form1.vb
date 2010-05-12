@@ -32,11 +32,11 @@
             If menuitemShowDir.Checked = True Then
                 Process.Start("explorer.exe", rootPath)
             End If
+            If menuitemBatchMode.Checked = True Then
+                Me.Close()
+            End If
         Else : txtboxDir.Text = "Choose a valid directory!"
             lblDone.Visible = False
         End If
-    End Sub
-
-    Private Sub OptionsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
     End Sub
 End Class
