@@ -22,18 +22,21 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.btnBrowse = New System.Windows.Forms.Button
         Me.btnMove = New System.Windows.Forms.Button
         Me.txtboxDir = New System.Windows.Forms.TextBox
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
-        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
+        Me.menuitemBatchMode = New System.Windows.Forms.ToolStripMenuItem
+        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDone = New System.Windows.Forms.Label
         Me.lblDirInfo = New System.Windows.Forms.Label
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog
+        Me.tooltipF2F = New System.Windows.Forms.ToolTip(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -44,6 +47,7 @@ Partial Class Form1
         Me.btnBrowse.Size = New System.Drawing.Size(24, 23)
         Me.btnBrowse.TabIndex = 0
         Me.btnBrowse.Text = "..."
+        Me.tooltipF2F.SetToolTip(Me.btnBrowse, "Click to browse for a directory")
         Me.btnBrowse.UseVisualStyleBackColor = True
         '
         'btnMove
@@ -53,6 +57,7 @@ Partial Class Form1
         Me.btnMove.Size = New System.Drawing.Size(75, 23)
         Me.btnMove.TabIndex = 1
         Me.btnMove.Text = "Move!"
+        Me.tooltipF2F.SetToolTip(Me.btnMove, "Click to process selected directory")
         Me.btnMove.UseVisualStyleBackColor = True
         '
         'txtboxDir
@@ -61,6 +66,7 @@ Partial Class Form1
         Me.txtboxDir.Name = "txtboxDir"
         Me.txtboxDir.Size = New System.Drawing.Size(238, 20)
         Me.txtboxDir.TabIndex = 2
+        Me.tooltipF2F.SetToolTip(Me.txtboxDir, "Manually enter a directory")
         '
         'ProgressBar1
         '
@@ -78,15 +84,9 @@ Partial Class Form1
         Me.MenuStrip1.TabIndex = 4
         Me.MenuStrip1.Text = "MenuStrip1"
         '
-        'AboutToolStripMenuItem
-        '
-        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(48, 20)
-        Me.AboutToolStripMenuItem.Text = "About"
-        '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemBatchMode})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -97,6 +97,21 @@ Partial Class Form1
         Me.menuitemShowDir.Name = "menuitemShowDir"
         Me.menuitemShowDir.Size = New System.Drawing.Size(152, 22)
         Me.menuitemShowDir.Text = "Show directory"
+        Me.menuitemShowDir.ToolTipText = "Opens the directory after processing"
+        '
+        'menuitemBatchMode
+        '
+        Me.menuitemBatchMode.CheckOnClick = True
+        Me.menuitemBatchMode.Name = "menuitemBatchMode"
+        Me.menuitemBatchMode.Size = New System.Drawing.Size(152, 22)
+        Me.menuitemBatchMode.Text = "Batch mode"
+        Me.menuitemBatchMode.ToolTipText = "Closes the application after processing"
+        '
+        'AboutToolStripMenuItem
+        '
+        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(48, 20)
+        Me.AboutToolStripMenuItem.Text = "About"
         '
         'lblDone
         '
@@ -149,5 +164,7 @@ Partial Class Form1
     Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents OptionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents menuitemShowDir As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents menuitemBatchMode As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tooltipF2F As System.Windows.Forms.ToolTip
 
 End Class
