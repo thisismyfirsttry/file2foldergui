@@ -31,12 +31,16 @@ Partial Class Form1
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
-        Me.menuitemBatchMode = New System.Windows.Forms.ToolStripMenuItem
+        Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
+        Me.SaveLogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.lblDone = New System.Windows.Forms.Label
         Me.lblDirInfo = New System.Windows.Forms.Label
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog
         Me.tooltipF2F = New System.Windows.Forms.ToolTip(Me.components)
+        Me.btnUndo = New System.Windows.Forms.Button
+        Me.bgwMover = New System.ComponentModel.BackgroundWorker
+        Me.txtLog = New System.Windows.Forms.TextBox
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -52,7 +56,7 @@ Partial Class Form1
         '
         'btnMove
         '
-        Me.btnMove.Location = New System.Drawing.Point(109, 76)
+        Me.btnMove.Location = New System.Drawing.Point(204, 271)
         Me.btnMove.Name = "btnMove"
         Me.btnMove.Size = New System.Drawing.Size(75, 23)
         Me.btnMove.TabIndex = 1
@@ -70,7 +74,7 @@ Partial Class Form1
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(12, 105)
+        Me.ProgressBar1.Location = New System.Drawing.Point(11, 242)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(268, 23)
         Me.ProgressBar1.TabIndex = 3
@@ -80,13 +84,13 @@ Partial Class Form1
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OptionsToolStripMenuItem, Me.AboutToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(292, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(291, 24)
         Me.MenuStrip1.TabIndex = 4
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemBatchMode})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose, Me.SaveLogToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -95,17 +99,24 @@ Partial Class Form1
         '
         Me.menuitemShowDir.CheckOnClick = True
         Me.menuitemShowDir.Name = "menuitemShowDir"
-        Me.menuitemShowDir.Size = New System.Drawing.Size(152, 22)
+        Me.menuitemShowDir.Size = New System.Drawing.Size(156, 22)
         Me.menuitemShowDir.Text = "Show directory"
         Me.menuitemShowDir.ToolTipText = "Opens the directory after processing"
         '
-        'menuitemBatchMode
+        'menuitemAutoClose
         '
-        Me.menuitemBatchMode.CheckOnClick = True
-        Me.menuitemBatchMode.Name = "menuitemBatchMode"
-        Me.menuitemBatchMode.Size = New System.Drawing.Size(152, 22)
-        Me.menuitemBatchMode.Text = "Batch mode"
-        Me.menuitemBatchMode.ToolTipText = "Closes the application after processing"
+        Me.menuitemAutoClose.CheckOnClick = True
+        Me.menuitemAutoClose.Name = "menuitemAutoClose"
+        Me.menuitemAutoClose.Size = New System.Drawing.Size(156, 22)
+        Me.menuitemAutoClose.Text = "Close after move"
+        Me.menuitemAutoClose.ToolTipText = "Closes the application after processing"
+        '
+        'SaveLogToolStripMenuItem
+        '
+        Me.SaveLogToolStripMenuItem.Name = "SaveLogToolStripMenuItem"
+        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(156, 22)
+        Me.SaveLogToolStripMenuItem.Text = "Save log"
+        Me.SaveLogToolStripMenuItem.ToolTipText = "Save log as text file"
         '
         'AboutToolStripMenuItem
         '
@@ -113,31 +124,51 @@ Partial Class Form1
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(48, 20)
         Me.AboutToolStripMenuItem.Text = "About"
         '
-        'lblDone
-        '
-        Me.lblDone.Location = New System.Drawing.Point(128, 110)
-        Me.lblDone.Name = "lblDone"
-        Me.lblDone.Size = New System.Drawing.Size(36, 13)
-        Me.lblDone.TabIndex = 5
-        Me.lblDone.Text = "Done!"
-        Me.lblDone.Visible = False
-        '
         'lblDirInfo
         '
         Me.lblDirInfo.AutoSize = True
         Me.lblDirInfo.Location = New System.Drawing.Point(9, 34)
         Me.lblDirInfo.Name = "lblDirInfo"
-        Me.lblDirInfo.Size = New System.Drawing.Size(151, 13)
+        Me.lblDirInfo.Size = New System.Drawing.Size(148, 13)
         Me.lblDirInfo.TabIndex = 6
-        Me.lblDirInfo.Text = "Enter or Browse for a Directory"
+        Me.lblDirInfo.Text = "Enter or browse for a directory"
+        '
+        'btnUndo
+        '
+        Me.btnUndo.Location = New System.Drawing.Point(123, 271)
+        Me.btnUndo.Name = "btnUndo"
+        Me.btnUndo.Size = New System.Drawing.Size(75, 23)
+        Me.btnUndo.TabIndex = 8
+        Me.btnUndo.Text = "Undo!"
+        Me.tooltipF2F.SetToolTip(Me.btnUndo, "Undo last move")
+        Me.btnUndo.UseVisualStyleBackColor = True
+        '
+        'bgwMover
+        '
+        Me.bgwMover.WorkerReportsProgress = True
+        Me.bgwMover.WorkerSupportsCancellation = True
+        '
+        'txtLog
+        '
+        Me.txtLog.Location = New System.Drawing.Point(12, 76)
+        Me.txtLog.Multiline = True
+        Me.txtLog.Name = "txtLog"
+        Me.txtLog.Size = New System.Drawing.Size(238, 160)
+        Me.txtLog.TabIndex = 9
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.Filter = """Text files |*.txt|All files|*.*"""
+        Me.SaveFileDialog1.Title = "Save log..."
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(292, 132)
+        Me.ClientSize = New System.Drawing.Size(291, 297)
+        Me.Controls.Add(Me.txtLog)
+        Me.Controls.Add(Me.btnUndo)
         Me.Controls.Add(Me.lblDirInfo)
-        Me.Controls.Add(Me.lblDone)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.txtboxDir)
         Me.Controls.Add(Me.btnMove)
@@ -159,12 +190,16 @@ Partial Class Form1
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents lblDone As System.Windows.Forms.Label
     Friend WithEvents lblDirInfo As System.Windows.Forms.Label
     Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents OptionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents menuitemShowDir As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents menuitemBatchMode As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents menuitemAutoClose As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tooltipF2F As System.Windows.Forms.ToolTip
+    Friend WithEvents btnUndo As System.Windows.Forms.Button
+    Friend WithEvents bgwMover As System.ComponentModel.BackgroundWorker
+    Friend WithEvents txtLog As System.Windows.Forms.TextBox
+    Friend WithEvents SaveLogToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
 
 End Class

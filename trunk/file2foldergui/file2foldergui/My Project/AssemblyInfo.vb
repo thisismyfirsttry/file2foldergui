@@ -13,7 +13,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCompany("theHTPC.net")> 
 <Assembly: AssemblyProduct("file2folder GUI")> 
 <Assembly: AssemblyCopyright("Copyright © theHTPC.net 2010")> 
-<Assembly: AssemblyTrademark("Copyright © theHTPC.net 2010")> 
+<Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
@@ -32,4 +32,4 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyFileVersion("1.1.0.0")> 
