@@ -1,0 +1,23 @@
+#summary Quick outline of usage and features
+
+= Quick Start =
+
+There really isn't much to using file2folder:
+ # Browse to or manually enter a valid directory.
+ # Click the *Move!* button.
+ # Complete your movie collection with the metadata program of your choice.  I recommend [http://v2.themetabrowser.com meta<browser>].
+
+= Features =
+
+file2folder GUI has many features in comparison to the script:
+
+ * GUI (of course!)
+ * Directory browsing or manual entry
+ * UNC pathname support (network shares!)
+ * Undo last move
+ * Process logging with ability to save
+ * Files with "Hidden" and "System" attributes are safely ignored
+ * Options for auto-closing and/or opening processed directory after moving
+ * Progress tracking
+ 
+ 
