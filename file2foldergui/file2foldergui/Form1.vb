@@ -91,8 +91,7 @@ Public Class Form1
         btnMove.Enabled = True
         btnUndo.Enabled = True
     End Sub
-
-    Private Sub SaveLogToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveLogToolStripMenuItem.Click
+    Private Sub SaveLogToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveLogToolStripMenuItem.Click
         SaveFileDialog1.ShowDialog()
         Try
             System.IO.File.WriteAllText(SaveFileDialog1.FileName, txtLog.Text)
