@@ -26,7 +26,6 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.btnBrowse = New System.Windows.Forms.Button
         Me.btnMove = New System.Windows.Forms.Button
-        Me.txtboxDir = New System.Windows.Forms.TextBox
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -42,6 +41,7 @@ Partial Class Form1
         Me.bgwMover = New System.ComponentModel.BackgroundWorker
         Me.txtLog = New System.Windows.Forms.TextBox
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
+        Me.txtBoxDir = New System.Windows.Forms.TextBox
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -64,14 +64,6 @@ Partial Class Form1
         Me.btnMove.Text = "Move!"
         Me.tooltipF2F.SetToolTip(Me.btnMove, "Click to process selected directory")
         Me.btnMove.UseVisualStyleBackColor = True
-        '
-        'txtboxDir
-        '
-        Me.txtboxDir.Location = New System.Drawing.Point(12, 50)
-        Me.txtboxDir.Name = "txtboxDir"
-        Me.txtboxDir.Size = New System.Drawing.Size(238, 20)
-        Me.txtboxDir.TabIndex = 2
-        Me.tooltipF2F.SetToolTip(Me.txtboxDir, "Manually enter a directory")
         '
         'ProgressBar1
         '
@@ -99,7 +91,7 @@ Partial Class Form1
         'SaveLogToolStripMenuItem
         '
         Me.SaveLogToolStripMenuItem.Name = "SaveLogToolStripMenuItem"
-        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
         Me.SaveLogToolStripMenuItem.Text = "Save log"
         Me.SaveLogToolStripMenuItem.ToolTipText = "Save log as text file"
         '
@@ -169,16 +161,26 @@ Partial Class Form1
         Me.SaveFileDialog1.Filter = "Text files |*.txt|All files|*.*"
         Me.SaveFileDialog1.Title = "Save log..."
         '
+        'txtBoxDir
+        '
+        Me.txtBoxDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txtBoxDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
+        Me.txtBoxDir.Location = New System.Drawing.Point(12, 50)
+        Me.txtBoxDir.Name = "txtBoxDir"
+        Me.txtBoxDir.Size = New System.Drawing.Size(238, 20)
+        Me.txtBoxDir.TabIndex = 10
+        Me.tooltipF2F.SetToolTip(Me.txtBoxDir, "Manually enter or browse for a directory")
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(291, 297)
+        Me.Controls.Add(Me.txtBoxDir)
         Me.Controls.Add(Me.txtLog)
         Me.Controls.Add(Me.btnUndo)
         Me.Controls.Add(Me.lblDirInfo)
         Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.txtboxDir)
         Me.Controls.Add(Me.btnMove)
         Me.Controls.Add(Me.btnBrowse)
         Me.Controls.Add(Me.MenuStrip1)
@@ -194,7 +196,6 @@ Partial Class Form1
     End Sub
     Friend WithEvents btnBrowse As System.Windows.Forms.Button
     Friend WithEvents btnMove As System.Windows.Forms.Button
-    Friend WithEvents txtboxDir As System.Windows.Forms.TextBox
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -210,5 +211,6 @@ Partial Class Form1
     Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveLogToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents txtBoxDir As System.Windows.Forms.TextBox
 
 End Class

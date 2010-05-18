@@ -20,3 +20,14 @@ X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.AboutBox1.
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form1.resources
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Resources.resources
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.vbproj.GenerateResource.Cache
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.exe
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.xml
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.pdb
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\ResolveAssemblyReference.cache
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.AboutBox1.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form1.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Resources.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.vbproj.GenerateResource.Cache
+D:\file2foldergui\file2foldergui\file2foldergui\bin\Debug\file2foldergui.exe
+D:\file2foldergui\file2foldergui\file2foldergui\bin\Debug\file2foldergui.pdb
+D:\file2foldergui\file2foldergui\file2foldergui\bin\Debug\file2foldergui.xml
