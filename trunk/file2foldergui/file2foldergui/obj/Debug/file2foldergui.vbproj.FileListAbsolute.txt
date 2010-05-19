@@ -33,3 +33,4 @@ D:\file2foldergui\file2foldergui\file2foldergui\bin\Debug\file2foldergui.pdb
 D:\file2foldergui\file2foldergui\file2foldergui\bin\Debug\file2foldergui.xml
 D:\file2foldergui\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Dialog1.resources
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Dialog1.resources
+X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form2.resources

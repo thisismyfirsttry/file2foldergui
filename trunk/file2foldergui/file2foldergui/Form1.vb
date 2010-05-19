@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
+Imports System.Net
+Imports System.Text.RegularExpressions
 
 Public Class Form1
 
@@ -13,14 +15,14 @@ Public Class Form1
 
     Private Sub btnMove_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMove.Click
 
-        If String.IsNullOrEmpty(txtboxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtboxDir.Text) Then
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
             btnUndo.Enabled = False
             btnMove.Enabled = False
             isUndo = False
             ProgressBar1.Value = 0
             bgwMover.RunWorkerAsync()
         Else
-            txtboxDir.Text = "Choose a valid directory!"
+            txtBoxDir.Text = "Choose a valid directory!"
         End If
     End Sub
 
@@ -34,14 +36,14 @@ Public Class Form1
 
     Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork
         If isUndo = False Then
-            Dim files() As String = IO.Directory.GetFiles(txtboxDir.Text.Trim)
+            Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
             If files.Length > 0 Then moveItems.Clear()
             Dim i As Integer = 1
             For Each filePath As String In files
                 Dim fi As New FileInfo(filePath)
                 If (fi.Attributes And IO.FileAttributes.Hidden Or FileAttributes.System) = IO.FileAttributes.Hidden Or IO.FileAttributes.System Or IO.File.Exists("file2foldergui.exe") Then Continue For
                 Try
-                    Dim newFolderPath As String = IO.Path.Combine(txtboxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
+                    Dim newFolderPath As String = IO.Path.Combine(txtBoxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
                     If Not IO.Directory.Exists(newFolderPath) Then
                         IO.Directory.CreateDirectory(newFolderPath)
                     End If
@@ -102,6 +104,26 @@ Public Class Form1
 
     Private Sub CheckForUpdateToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckForUpdateToolStripMenuItem.Click
         Dialog1.Show()
+    End Sub
+
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt")
+        Dim req As WebRequest
+        req = WebRequest.Create(url)
+        Dim resp As WebResponse
+        resp = req.GetResponse()
+        resp.Close()
+        req = Nothing
+        webBrwsStartup.Navigate("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt")
+    End Sub
+
+    Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
+        Dim m As Match = Regex.Match(webBrwsStartup.DocumentText, "<PRE>(?<version>(.*?))</PRE>")
+        If m.Success = True Then
+            If Application.ProductVersion <> m.Groups("version").Value Then
+                Form2.Show()
+            End If
+        End If
     End Sub
 End Class
 
