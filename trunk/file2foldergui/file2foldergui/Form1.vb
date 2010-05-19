@@ -39,7 +39,7 @@ Public Class Form1
             Dim i As Integer = 1
             For Each filePath As String In files
                 Dim fi As New FileInfo(filePath)
-                If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Then Continue For
+                If (fi.Attributes And IO.FileAttributes.Hidden Or FileAttributes.System) = IO.FileAttributes.Hidden Or IO.FileAttributes.System Or IO.File.Exists("file2foldergui.exe") Then Continue For
                 Try
                     Dim newFolderPath As String = IO.Path.Combine(txtboxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
                     If Not IO.Directory.Exists(newFolderPath) Then

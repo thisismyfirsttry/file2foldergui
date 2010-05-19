@@ -1,0 +1,12 @@
+X:\VB Projects\file2foldergui\file2foldergui\bin\Release\file2foldergui.exe
+X:\VB Projects\file2foldergui\file2foldergui\bin\Release\file2foldergui.pdb
+X:\VB Projects\file2foldergui\file2foldergui\bin\Release\file2foldergui.xml
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\ResolveAssemblyReference.cache
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.AboutBox1.resources
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.Form1.resources
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.Resources.resources
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.Dialog1.resources
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.vbproj.GenerateResource.Cache
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.exe
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.xml
+X:\VB Projects\file2foldergui\file2foldergui\obj\Release\file2foldergui.pdb
