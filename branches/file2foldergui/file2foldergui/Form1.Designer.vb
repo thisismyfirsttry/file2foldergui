@@ -33,15 +33,16 @@ Partial Class Form1
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
+        Me.CheckForUpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDirInfo = New System.Windows.Forms.Label
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog
         Me.tooltipF2F = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnUndo = New System.Windows.Forms.Button
+        Me.txtBoxDir = New System.Windows.Forms.TextBox
         Me.bgwMover = New System.ComponentModel.BackgroundWorker
         Me.txtLog = New System.Windows.Forms.TextBox
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
-        Me.txtBoxDir = New System.Windows.Forms.TextBox
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -97,7 +98,7 @@ Partial Class Form1
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose, Me.CheckForUpdateToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -106,7 +107,7 @@ Partial Class Form1
         '
         Me.menuitemShowDir.CheckOnClick = True
         Me.menuitemShowDir.Name = "menuitemShowDir"
-        Me.menuitemShowDir.Size = New System.Drawing.Size(156, 22)
+        Me.menuitemShowDir.Size = New System.Drawing.Size(157, 22)
         Me.menuitemShowDir.Text = "Show directory"
         Me.menuitemShowDir.ToolTipText = "Opens the directory after processing"
         '
@@ -114,9 +115,15 @@ Partial Class Form1
         '
         Me.menuitemAutoClose.CheckOnClick = True
         Me.menuitemAutoClose.Name = "menuitemAutoClose"
-        Me.menuitemAutoClose.Size = New System.Drawing.Size(156, 22)
+        Me.menuitemAutoClose.Size = New System.Drawing.Size(157, 22)
         Me.menuitemAutoClose.Text = "Close after move"
         Me.menuitemAutoClose.ToolTipText = "Closes the application after processing"
+        '
+        'CheckForUpdateToolStripMenuItem
+        '
+        Me.CheckForUpdateToolStripMenuItem.Name = "CheckForUpdateToolStripMenuItem"
+        Me.CheckForUpdateToolStripMenuItem.Size = New System.Drawing.Size(157, 22)
+        Me.CheckForUpdateToolStripMenuItem.Text = "Check for update"
         '
         'AboutToolStripMenuItem
         '
@@ -143,6 +150,16 @@ Partial Class Form1
         Me.tooltipF2F.SetToolTip(Me.btnUndo, "Undo last move")
         Me.btnUndo.UseVisualStyleBackColor = True
         '
+        'txtBoxDir
+        '
+        Me.txtBoxDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txtBoxDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
+        Me.txtBoxDir.Location = New System.Drawing.Point(12, 50)
+        Me.txtBoxDir.Name = "txtBoxDir"
+        Me.txtBoxDir.Size = New System.Drawing.Size(238, 20)
+        Me.txtBoxDir.TabIndex = 10
+        Me.tooltipF2F.SetToolTip(Me.txtBoxDir, "Manually enter or browse for a directory")
+        '
         'bgwMover
         '
         Me.bgwMover.WorkerReportsProgress = True
@@ -161,21 +178,11 @@ Partial Class Form1
         Me.SaveFileDialog1.Filter = "Text files |*.txt|All files|*.*"
         Me.SaveFileDialog1.Title = "Save log..."
         '
-        'txtBoxDir
-        '
-        Me.txtBoxDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.txtBoxDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
-        Me.txtBoxDir.Location = New System.Drawing.Point(12, 50)
-        Me.txtBoxDir.Name = "txtBoxDir"
-        Me.txtBoxDir.Size = New System.Drawing.Size(238, 20)
-        Me.txtBoxDir.TabIndex = 10
-        Me.tooltipF2F.SetToolTip(Me.txtBoxDir, "Manually enter or browse for a directory")
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(291, 297)
+        Me.ClientSize = New System.Drawing.Size(291, 317)
         Me.Controls.Add(Me.txtBoxDir)
         Me.Controls.Add(Me.txtLog)
         Me.Controls.Add(Me.btnUndo)
@@ -212,5 +219,6 @@ Partial Class Form1
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveLogToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents txtBoxDir As System.Windows.Forms.TextBox
+    Friend WithEvents CheckForUpdateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

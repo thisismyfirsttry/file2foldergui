@@ -5,26 +5,25 @@ Public Class Form1
 
     Dim moveItems As New BindingList(Of MoveItem)
     Dim isUndo As Boolean = False
-
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
         AboutBox1.Show()
     End Sub
 
     Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click
         FolderBrowserDialog1.ShowDialog()
-        txtboxDir.Text = FolderBrowserDialog1.SelectedPath
+        txtBoxDir.Text = FolderBrowserDialog1.SelectedPath
     End Sub
 
     Private Sub btnMove_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMove.Click
 
-        If String.IsNullOrEmpty(txtboxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtboxDir.Text) Then
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
             btnUndo.Enabled = False
             btnMove.Enabled = False
             isUndo = False
             ProgressBar1.Value = 0
             bgwMover.RunWorkerAsync()
         Else
-            txtboxDir.Text = "Choose a valid directory!"
+            txtBoxDir.Text = "Choose a valid directory!"
         End If
     End Sub
 
@@ -38,14 +37,14 @@ Public Class Form1
 
     Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork
         If isUndo = False Then
-            Dim files() As String = IO.Directory.GetFiles(txtboxDir.Text.Trim)
+            Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
             If files.Length > 0 Then moveItems.Clear()
             Dim i As Integer = 1
             For Each filePath As String In files
                 Dim fi As New FileInfo(filePath)
                 If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Then Continue For
                 Try
-                    Dim newFolderPath As String = IO.Path.Combine(txtboxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
+                    Dim newFolderPath As String = IO.Path.Combine(txtBoxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
                     If Not IO.Directory.Exists(newFolderPath) Then
                         IO.Directory.CreateDirectory(newFolderPath)
                     End If
@@ -98,6 +97,10 @@ Public Class Form1
         Catch ex As Exception
             System.IO.File.WriteAllText(0, "Error: " & ex.Message & vbCrLf)
         End Try
+    End Sub
+
+    Private Sub CheckForUpdateToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckForUpdateToolStripMenuItem.Click
+        Form2.Show()
     End Sub
 End Class
 
