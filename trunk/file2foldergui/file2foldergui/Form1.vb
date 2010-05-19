@@ -6,13 +6,9 @@ Public Class Form1
     Dim moveItems As New BindingList(Of MoveItem)
     Dim isUndo As Boolean = False
 
-    Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
-        AboutBox1.Show()
-    End Sub
-
     Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click
         FolderBrowserDialog1.ShowDialog()
-        txtboxDir.Text = FolderBrowserDialog1.SelectedPath
+        txtBoxDir.Text = FolderBrowserDialog1.SelectedPath
     End Sub
 
     Private Sub btnMove_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMove.Click
@@ -98,6 +94,14 @@ Public Class Form1
         Catch ex As Exception
             System.IO.File.WriteAllText(0, "Error: " & ex.Message & vbCrLf)
         End Try
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
+        AboutBox1.Show()
+    End Sub
+
+    Private Sub CheckForUpdateToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckForUpdateToolStripMenuItem.Click
+        Dialog1.Show()
     End Sub
 End Class
 

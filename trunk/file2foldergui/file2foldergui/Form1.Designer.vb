@@ -34,14 +34,16 @@ Partial Class Form1
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.CheckForUpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDirInfo = New System.Windows.Forms.Label
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog
         Me.tooltipF2F = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnUndo = New System.Windows.Forms.Button
+        Me.txtBoxDir = New System.Windows.Forms.TextBox
         Me.bgwMover = New System.ComponentModel.BackgroundWorker
         Me.txtLog = New System.Windows.Forms.TextBox
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
-        Me.txtBoxDir = New System.Windows.Forms.TextBox
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -120,9 +122,23 @@ Partial Class Form1
         '
         'AboutToolStripMenuItem
         '
+        Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForUpdateToolStripMenuItem, Me.ToolStripMenuItem1})
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(48, 20)
         Me.AboutToolStripMenuItem.Text = "About"
+        '
+        'CheckForUpdateToolStripMenuItem
+        '
+        Me.CheckForUpdateToolStripMenuItem.Name = "CheckForUpdateToolStripMenuItem"
+        Me.CheckForUpdateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.CheckForUpdateToolStripMenuItem.Text = "Check for update"
+        Me.CheckForUpdateToolStripMenuItem.ToolTipText = "Check for the latest version"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(175, 22)
+        Me.ToolStripMenuItem1.Text = "About file2folder GUI"
         '
         'lblDirInfo
         '
@@ -143,6 +159,16 @@ Partial Class Form1
         Me.tooltipF2F.SetToolTip(Me.btnUndo, "Undo last move")
         Me.btnUndo.UseVisualStyleBackColor = True
         '
+        'txtBoxDir
+        '
+        Me.txtBoxDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.txtBoxDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
+        Me.txtBoxDir.Location = New System.Drawing.Point(12, 50)
+        Me.txtBoxDir.Name = "txtBoxDir"
+        Me.txtBoxDir.Size = New System.Drawing.Size(238, 20)
+        Me.txtBoxDir.TabIndex = 10
+        Me.tooltipF2F.SetToolTip(Me.txtBoxDir, "Manually enter or browse for a directory")
+        '
         'bgwMover
         '
         Me.bgwMover.WorkerReportsProgress = True
@@ -160,16 +186,6 @@ Partial Class Form1
         '
         Me.SaveFileDialog1.Filter = "Text files |*.txt|All files|*.*"
         Me.SaveFileDialog1.Title = "Save log..."
-        '
-        'txtBoxDir
-        '
-        Me.txtBoxDir.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.txtBoxDir.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
-        Me.txtBoxDir.Location = New System.Drawing.Point(12, 50)
-        Me.txtBoxDir.Name = "txtBoxDir"
-        Me.txtBoxDir.Size = New System.Drawing.Size(238, 20)
-        Me.txtBoxDir.TabIndex = 10
-        Me.tooltipF2F.SetToolTip(Me.txtBoxDir, "Manually enter or browse for a directory")
         '
         'Form1
         '
@@ -212,5 +228,7 @@ Partial Class Form1
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveLogToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents txtBoxDir As System.Windows.Forms.TextBox
+    Friend WithEvents CheckForUpdateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
 
 End Class
