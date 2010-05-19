@@ -44,6 +44,7 @@ Partial Class Form1
         Me.bgwMover = New System.ComponentModel.BackgroundWorker
         Me.txtLog = New System.Windows.Forms.TextBox
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
+        Me.webBrwsStartup = New System.Windows.Forms.WebBrowser
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -187,11 +188,21 @@ Partial Class Form1
         Me.SaveFileDialog1.Filter = "Text files |*.txt|All files|*.*"
         Me.SaveFileDialog1.Title = "Save log..."
         '
+        'webBrwsStartup
+        '
+        Me.webBrwsStartup.Location = New System.Drawing.Point(12, 271)
+        Me.webBrwsStartup.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.webBrwsStartup.Name = "webBrwsStartup"
+        Me.webBrwsStartup.Size = New System.Drawing.Size(60, 23)
+        Me.webBrwsStartup.TabIndex = 11
+        Me.webBrwsStartup.Visible = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(291, 297)
+        Me.Controls.Add(Me.webBrwsStartup)
         Me.Controls.Add(Me.txtBoxDir)
         Me.Controls.Add(Me.txtLog)
         Me.Controls.Add(Me.btnUndo)
@@ -230,5 +241,6 @@ Partial Class Form1
     Friend WithEvents txtBoxDir As System.Windows.Forms.TextBox
     Friend WithEvents CheckForUpdateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents webBrwsStartup As System.Windows.Forms.WebBrowser
 
 End Class
