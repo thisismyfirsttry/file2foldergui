@@ -8,14 +8,14 @@ Public Class Form1
     Dim moveItems As New BindingList(Of MoveItem)
     Dim isUndo As Boolean = False
 
-    Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click
+    Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click 'file browser initiate'
         FolderBrowserDialog1.ShowDialog()
         txtBoxDir.Text = FolderBrowserDialog1.SelectedPath
     End Sub
 
     Private Sub btnMove_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMove.Click
 
-        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'don't allow invalid or null directory entries'
             btnUndo.Enabled = False
             btnMove.Enabled = False
             isUndo = False
@@ -26,7 +26,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub btnUndo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUndo.Click
+    Private Sub btnUndo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUndo.Click ' background worker process for undo'
         btnUndo.Enabled = False
         btnMove.Enabled = False
         isUndo = True
@@ -34,24 +34,24 @@ Public Class Form1
         bgwMover.RunWorkerAsync()
     End Sub
 
-    Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork
+    Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork 'background worker process for move'
         If isUndo = False Then
             Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
             If files.Length > 0 Then moveItems.Clear()
             Dim i As Integer = 1
             For Each filePath As String In files
                 Dim fi As New FileInfo(filePath)
-                If (fi.Attributes And IO.FileAttributes.Hidden Or FileAttributes.System) = IO.FileAttributes.Hidden Or IO.FileAttributes.System Or IO.File.Exists("file2foldergui.exe") Then Continue For
+                If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Or (fi.Attributes And IO.FileAttributes.System) = IO.FileAttributes.System Then Continue For 'Check for hidden or system attribute and exclude for each'
                 Try
                     Dim newFolderPath As String = IO.Path.Combine(txtBoxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
                     If Not IO.Directory.Exists(newFolderPath) Then
-                        IO.Directory.CreateDirectory(newFolderPath)
+                        IO.Directory.CreateDirectory(newFolderPath) 'create new directory based on filename minus extension if it does not exist'
                     End If
 
                     Dim mi As New MoveItem
                     mi.OldPath = filePath
                     mi.NewPath = IO.Path.Combine(newFolderPath, IO.Path.GetFileName(filePath))
-                    moveItems.Add(mi)
+                    moveItems.Add(mi) 'move files by name into folders by name'
 
                     bgwMover.ReportProgress((i / files.Length) * 100, "Moving """ & IO.Path.GetFileName(mi.OldPath) & """ to """ & mi.NewPath & """...")
                     IO.File.Move(mi.OldPath, mi.NewPath)
@@ -65,7 +65,7 @@ Public Class Form1
             Dim i As Integer = 1
             For Each mi As MoveItem In moveItems
                 Try
-                    bgwMover.ReportProgress((i / moveItems.Count) * 100, "Undoing """ & IO.Path.GetFileName(mi.NewPath) & """ to """ & mi.OldPath & """...")
+                    bgwMover.ReportProgress((i / moveItems.Count) * 100, "Undoing """ & IO.Path.GetFileName(mi.NewPath) & """ to """ & mi.OldPath & """...") 'progress bar stuff'
                     IO.File.Move(mi.NewPath, mi.OldPath)
                     IO.Directory.Delete(My.Computer.FileSystem.GetParentPath(mi.NewPath))
                     bgwMover.ReportProgress(0, "Done." & vbCrLf)
@@ -99,15 +99,15 @@ Public Class Form1
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
-        AboutBox1.Show()
+        AboutBox1.Show() 'about box = whoopie'
     End Sub
 
     Private Sub CheckForUpdateToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckForUpdateToolStripMenuItem.Click
-        Dialog1.Show()
+        Dialog1.Show() 'update checker'
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt")
+        Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
         Dim req As WebRequest
         req = WebRequest.Create(url)
         Dim resp As WebResponse
@@ -118,7 +118,7 @@ Public Class Form1
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
-        Dim m As Match = Regex.Match(webBrwsStartup.DocumentText, "<PRE>(?<version>(.*?))</PRE>")
+        Dim m As Match = Regex.Match(webBrwsStartup.DocumentText, "<PRE>(?<version>(.*?))</PRE>") 'popup dialog if update is available'
         If m.Success = True Then
             If Application.ProductVersion <> m.Groups("version").Value Then
                 Form2.Show()
