@@ -4,7 +4,6 @@ Imports System.Net
 Imports System.Text.RegularExpressions
 
 Public Class Form1
-
     Dim moveItems As New BindingList(Of MoveItem)
     Dim isUndo As Boolean = False
 
@@ -14,7 +13,6 @@ Public Class Form1
     End Sub
 
     Private Sub btnMove_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnMove.Click
-
         If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'don't allow invalid or null directory entries'
             btnUndo.Enabled = False
             btnMove.Enabled = False
@@ -90,7 +88,7 @@ Public Class Form1
         btnUndo.Enabled = True
     End Sub
     Private Sub SaveLogToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveLogToolStripMenuItem.Click
-        SaveFileDialog1.ShowDialog()
+        SaveFileDialog1.ShowDialog() 'saves currently shown textbox contents to log file
         Try
             System.IO.File.WriteAllText(SaveFileDialog1.FileName, txtLog.Text)
         Catch ex As Exception
@@ -100,10 +98,6 @@ Public Class Form1
 
     Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
         AboutBox1.ShowDialog() 'about box = whoopie'
-    End Sub
-
-    Private Sub CheckForUpdateToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckForUpdateToolStripMenuItem.Click
-        Dialog1.ShowDialog() 'update checker'
     End Sub
 
     Private Sub Form1_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Me.DragDrop
@@ -121,21 +115,20 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Me.DragEnter
-        If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then 'if drag data is there, show the cursor effect
+        If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then 'detect data dragged into form
             e.Effect = DragDropEffects.All
         End If
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        MessageBox.Show(Application.ExecutablePath.ToString)
+        Me.Text = " file2folder GUI v" & Application.ProductVersion.ToString
         Try 'check for previous update "old" file.  delete if exists.
-            If File.Exists(Application.StartupPath().ToString & "\" & "file2foldergui.old") = True Then
-                File.Delete(Application.StartupPath().ToString & "\" & "file2foldergui.old")
+            If File.Exists(Application.StartupPath & "\file2foldergui.old") = True Then
+                File.Delete(Application.StartupPath & "\file2foldergui.old")
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-
         Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
         Dim req As WebRequest
         req = WebRequest.Create(url)
@@ -149,16 +142,16 @@ Public Class Form1
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
-        'Dim m As Match = Regex.Match(webBrwsStartup.DocumentText, "<PRE>(?<version>(.*?))</PRE>") 'popup dialog if update is available'
-        'If m.Success = True Then
-        'If Application.ProductVersion <> m.Groups("version").Value Then
-        'Dim currApp = Application.ExecutablePath()
-        'Rename(currApp, Application.StartupPath & "/file2foldergui.old")
-        'DownloadFile()
-        'Application.Restart()
-        Form2.ShowDialog()
-        'End If
-        'End If
+        Try
+            Dim m As Match = Regex.Match(webBrwsStartup.DocumentText, "<PRE>(?<version>(.*?))</PRE>") 'popup dialog if update is available'
+            If m.Success = True Then
+                If Application.ProductVersion <> m.Groups("version").Value Then
+                    Form2.ShowDialog()
+                End If
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
     Private Sub txtBoxDir_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles txtBoxDir.DragDrop
@@ -176,7 +169,7 @@ Public Class Form1
     End Sub
 
     Private Sub txtBoxDir_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles txtBoxDir.DragEnter
-        Try
+        Try 'detects dragged item entering form
             If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then
                 e.Effect = DragDropEffects.All
             End If
@@ -184,9 +177,22 @@ Public Class Form1
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
+    Private Sub Form1_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
+        If Me.WindowState = FormWindowState.Minimized Then 'send to tray on minimize
+            Me.Hide()
+        End If
+    End Sub
+
+    Private Sub NotifyIcon1_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseClick
+        If Me.WindowState = FormWindowState.Minimized Then 'maximize on system tray icon mouse click
+            Me.Show()
+            Me.WindowState = FormWindowState.Normal
+        End If
+    End Sub
 End Class
 
-Public Class MoveItem
+Public Class MoveItem 'variables for handling undo feature
     Dim _oldPath As String = String.Empty
     Public Property OldPath() As String
         Get

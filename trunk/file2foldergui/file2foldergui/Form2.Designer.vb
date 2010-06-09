@@ -22,18 +22,18 @@ Partial Class Form2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.btnClose = New System.Windows.Forms.Button
+        Me.btnOK = New System.Windows.Forms.Button
         Me.lblNewVersion = New System.Windows.Forms.Label
         Me.SuspendLayout()
         '
-        'btnClose
+        'btnOK
         '
-        Me.btnClose.Location = New System.Drawing.Point(205, 89)
-        Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(75, 23)
-        Me.btnClose.TabIndex = 1
-        Me.btnClose.Text = "OK"
-        Me.btnClose.UseVisualStyleBackColor = True
+        Me.btnOK.Location = New System.Drawing.Point(205, 89)
+        Me.btnOK.Name = "btnOK"
+        Me.btnOK.Size = New System.Drawing.Size(75, 23)
+        Me.btnOK.TabIndex = 1
+        Me.btnOK.Text = "OK"
+        Me.btnOK.UseVisualStyleBackColor = True
         '
         'lblNewVersion
         '
@@ -49,12 +49,13 @@ Partial Class Form2
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(292, 124)
         Me.Controls.Add(Me.lblNewVersion)
-        Me.Controls.Add(Me.btnClose)
+        Me.Controls.Add(Me.btnOK)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Name = "Form2"
         Me.Text = "Update available!"
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents btnClose As System.Windows.Forms.Button
+    Friend WithEvents btnOK As System.Windows.Forms.Button
     Friend WithEvents lblNewVersion As System.Windows.Forms.Label
 End Class
