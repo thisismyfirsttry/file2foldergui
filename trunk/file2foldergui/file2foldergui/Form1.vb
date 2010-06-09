@@ -99,11 +99,11 @@ Public Class Form1
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
-        AboutBox1.Show() 'about box = whoopie'
+        AboutBox1.ShowDialog() 'about box = whoopie'
     End Sub
 
     Private Sub CheckForUpdateToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckForUpdateToolStripMenuItem.Click
-        Dialog1.Show() 'update checker'
+        Dialog1.ShowDialog() 'update checker'
     End Sub
 
     Private Sub Form1_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Me.DragDrop
@@ -127,6 +127,15 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        MessageBox.Show(Application.ExecutablePath.ToString)
+        Try 'check for previous update "old" file.  delete if exists.
+            If File.Exists(Application.StartupPath().ToString & "\" & "file2foldergui.old") = True Then
+                File.Delete(Application.StartupPath().ToString & "\" & "file2foldergui.old")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
         Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
         Dim req As WebRequest
         req = WebRequest.Create(url)
@@ -134,18 +143,22 @@ Public Class Form1
         resp = req.GetResponse()
         resp.Close()
         req = Nothing
-        webBrwsStartup.Navigate("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt")
+        webBrwsStartup.Navigate(url)
         Me.AllowDrop = True
         txtBoxDir.AllowDrop = True
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
-        Dim m As Match = Regex.Match(webBrwsStartup.DocumentText, "<PRE>(?<version>(.*?))</PRE>") 'popup dialog if update is available'
-        If m.Success = True Then
-            If Application.ProductVersion <> m.Groups("version").Value Then
-                Form2.Show()
-            End If
-        End If
+        'Dim m As Match = Regex.Match(webBrwsStartup.DocumentText, "<PRE>(?<version>(.*?))</PRE>") 'popup dialog if update is available'
+        'If m.Success = True Then
+        'If Application.ProductVersion <> m.Groups("version").Value Then
+        'Dim currApp = Application.ExecutablePath()
+        'Rename(currApp, Application.StartupPath & "/file2foldergui.old")
+        'DownloadFile()
+        'Application.Restart()
+        Form2.ShowDialog()
+        'End If
+        'End If
     End Sub
 
     Private Sub txtBoxDir_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles txtBoxDir.DragDrop
