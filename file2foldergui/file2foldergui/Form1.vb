@@ -106,6 +106,26 @@ Public Class Form1
         Dialog1.Show() 'update checker'
     End Sub
 
+    Private Sub Form1_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Me.DragDrop
+        Try 'enable drag and drop of directories to get full path name for processing on the form
+            If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then
+                Dim draggedFolder As String() = CType(e.Data.GetData(DataFormats.FileDrop), String())
+                e.Effect = DragDropEffects.Copy
+                For Each foldername In draggedFolder
+                    txtBoxDir.Text = Path.GetFullPath(foldername)
+                Next
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub Form1_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Me.DragEnter
+        If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then 'if drag data is there, show the cursor effect
+            e.Effect = DragDropEffects.All
+        End If
+    End Sub
+
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
         Dim req As WebRequest
@@ -115,6 +135,8 @@ Public Class Form1
         resp.Close()
         req = Nothing
         webBrwsStartup.Navigate("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt")
+        Me.AllowDrop = True
+        txtBoxDir.AllowDrop = True
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
@@ -124,6 +146,30 @@ Public Class Form1
                 Form2.Show()
             End If
         End If
+    End Sub
+
+    Private Sub txtBoxDir_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles txtBoxDir.DragDrop
+        Try 'enable drag and drop of directories to get full path name for processing on the text box also
+            If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then
+                Dim draggedFolder As String() = CType(e.Data.GetData(DataFormats.FileDrop), String())
+                e.Effect = DragDropEffects.Copy
+                For Each foldername In draggedFolder
+                    txtBoxDir.Text = Path.GetFullPath(foldername)
+                Next
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub txtBoxDir_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles txtBoxDir.DragEnter
+        Try
+            If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then
+                e.Effect = DragDropEffects.All
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 End Class
 
