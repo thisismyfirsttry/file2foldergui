@@ -1,11 +1,14 @@
 ﻿Public Class Form2
 
     Private Sub btnClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnClose.Click
+        Dim currApp = Application.ExecutablePath()
+        Rename(currApp, Application.StartupPath & "/file2foldergui.old")
+        DownloadFile()
+        Application.Restart()
         Me.Close()
     End Sub
 
-    Private Sub linklblDownload_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles linklblDownload.LinkClicked
-        Process.Start("http://update.thehtpc.net/file2foldergui/latest-version/file2foldergui.exe")
-        Me.Close()
+    Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        lblNewVersion.Text = "A new version of file2folder is available!" & vbCrLf & "Click OK to update and restart the application."
     End Sub
 End Class

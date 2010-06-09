@@ -1,0 +1,13 @@
+D:\file2foldergui\file2foldergui\file2foldergui\bin\Release\file2foldergui.exe
+D:\file2foldergui\file2foldergui\file2foldergui\bin\Release\file2foldergui.pdb
+D:\file2foldergui\file2foldergui\file2foldergui\bin\Release\file2foldergui.xml
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\ResolveAssemblyReference.cache
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.AboutBox1.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.Form1.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.Resources.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.Dialog1.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.Form2.resources
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.vbproj.GenerateResource.Cache
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.exe
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.xml
+D:\file2foldergui\file2foldergui\file2foldergui\obj\Release\file2foldergui.pdb

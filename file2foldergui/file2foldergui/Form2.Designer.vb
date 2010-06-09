@@ -22,21 +22,9 @@ Partial Class Form2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.linklblDownload = New System.Windows.Forms.LinkLabel
         Me.btnClose = New System.Windows.Forms.Button
         Me.lblNewVersion = New System.Windows.Forms.Label
         Me.SuspendLayout()
-        '
-        'linklblDownload
-        '
-        Me.linklblDownload.AutoSize = True
-        Me.linklblDownload.Location = New System.Drawing.Point(117, 56)
-        Me.linklblDownload.Name = "linklblDownload"
-        Me.linklblDownload.Size = New System.Drawing.Size(58, 13)
-        Me.linklblDownload.TabIndex = 0
-        Me.linklblDownload.TabStop = True
-        Me.linklblDownload.Text = "Download!"
-        Me.linklblDownload.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'btnClose
         '
@@ -49,12 +37,10 @@ Partial Class Form2
         '
         'lblNewVersion
         '
-        Me.lblNewVersion.AutoSize = True
-        Me.lblNewVersion.Location = New System.Drawing.Point(50, 22)
+        Me.lblNewVersion.Location = New System.Drawing.Point(12, 9)
         Me.lblNewVersion.Name = "lblNewVersion"
-        Me.lblNewVersion.Size = New System.Drawing.Size(192, 13)
+        Me.lblNewVersion.Size = New System.Drawing.Size(268, 64)
         Me.lblNewVersion.TabIndex = 2
-        Me.lblNewVersion.Text = "A new version of file2folder is available!"
         Me.lblNewVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Form2
@@ -64,14 +50,11 @@ Partial Class Form2
         Me.ClientSize = New System.Drawing.Size(292, 124)
         Me.Controls.Add(Me.lblNewVersion)
         Me.Controls.Add(Me.btnClose)
-        Me.Controls.Add(Me.linklblDownload)
         Me.Name = "Form2"
-        Me.Text = "file2folder GUI Update Available"
+        Me.Text = "Update available!"
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-    Friend WithEvents linklblDownload As System.Windows.Forms.LinkLabel
     Friend WithEvents btnClose As System.Windows.Forms.Button
     Friend WithEvents lblNewVersion As System.Windows.Forms.Label
 End Class
