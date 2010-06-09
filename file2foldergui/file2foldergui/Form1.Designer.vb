@@ -34,7 +34,6 @@ Partial Class Form1
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.CheckForUpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDirInfo = New System.Windows.Forms.Label
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog
@@ -45,6 +44,7 @@ Partial Class Form1
         Me.txtLog = New System.Windows.Forms.TextBox
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
         Me.webBrwsStartup = New System.Windows.Forms.WebBrowser
+        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -123,17 +123,10 @@ Partial Class Form1
         '
         'AboutToolStripMenuItem
         '
-        Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForUpdateToolStripMenuItem, Me.ToolStripMenuItem1})
+        Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(48, 20)
         Me.AboutToolStripMenuItem.Text = "About"
-        '
-        'CheckForUpdateToolStripMenuItem
-        '
-        Me.CheckForUpdateToolStripMenuItem.Name = "CheckForUpdateToolStripMenuItem"
-        Me.CheckForUpdateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.CheckForUpdateToolStripMenuItem.Text = "Check for update"
-        Me.CheckForUpdateToolStripMenuItem.ToolTipText = "Check for the latest version"
         '
         'ToolStripMenuItem1
         '
@@ -197,6 +190,12 @@ Partial Class Form1
         Me.webBrwsStartup.TabIndex = 11
         Me.webBrwsStartup.Visible = False
         '
+        'NotifyIcon1
+        '
+        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
+        Me.NotifyIcon1.Text = "file2folder GUI"
+        Me.NotifyIcon1.Visible = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -211,6 +210,7 @@ Partial Class Form1
         Me.Controls.Add(Me.btnMove)
         Me.Controls.Add(Me.btnBrowse)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
@@ -239,8 +239,8 @@ Partial Class Form1
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveLogToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents txtBoxDir As System.Windows.Forms.TextBox
-    Friend WithEvents CheckForUpdateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents webBrwsStartup As System.Windows.Forms.WebBrowser
+    Friend WithEvents NotifyIcon1 As System.Windows.Forms.NotifyIcon
 
 End Class
