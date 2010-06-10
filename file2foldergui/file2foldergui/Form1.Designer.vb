@@ -33,7 +33,6 @@ Partial Class Form1
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
-        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDirInfo = New System.Windows.Forms.Label
@@ -49,10 +48,9 @@ Partial Class Form1
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.btnStop = New System.Windows.Forms.Button
         Me.btnStart = New System.Windows.Forms.Button
-        Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnBrowse
@@ -101,13 +99,13 @@ Partial Class Form1
         'SaveLogToolStripMenuItem
         '
         Me.SaveLogToolStripMenuItem.Name = "SaveLogToolStripMenuItem"
-        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SaveLogToolStripMenuItem.Text = "Save log"
         Me.SaveLogToolStripMenuItem.ToolTipText = "Save log as text file"
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose, Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -116,7 +114,7 @@ Partial Class Form1
         '
         Me.menuitemShowDir.CheckOnClick = True
         Me.menuitemShowDir.Name = "menuitemShowDir"
-        Me.menuitemShowDir.Size = New System.Drawing.Size(303, 22)
+        Me.menuitemShowDir.Size = New System.Drawing.Size(288, 22)
         Me.menuitemShowDir.Text = "Show directory"
         Me.menuitemShowDir.ToolTipText = "Opens the directory after processing"
         '
@@ -124,15 +122,9 @@ Partial Class Form1
         '
         Me.menuitemAutoClose.CheckOnClick = True
         Me.menuitemAutoClose.Name = "menuitemAutoClose"
-        Me.menuitemAutoClose.Size = New System.Drawing.Size(303, 22)
+        Me.menuitemAutoClose.Size = New System.Drawing.Size(288, 22)
         Me.menuitemAutoClose.Text = "Close after move (No undo will be available!)"
         Me.menuitemAutoClose.ToolTipText = "Closes the application after processing"
-        '
-        'EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem
-        '
-        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem.Name = "EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem"
-        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem.Size = New System.Drawing.Size(303, 22)
-        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem.Text = "Enable file system watcher for current directory"
         '
         'AboutToolStripMenuItem
         '
@@ -238,10 +230,9 @@ Partial Class Form1
         Me.btnStart.Text = "Start"
         Me.btnStart.UseVisualStyleBackColor = True
         '
-        'FileSystemWatcher1
+        'Timer1
         '
-        Me.FileSystemWatcher1.EnableRaisingEvents = True
-        Me.FileSystemWatcher1.SynchronizingObject = Me
+        Me.Timer1.Interval = 180000
         '
         'Form1
         '
@@ -266,7 +257,6 @@ Partial Class Form1
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -292,10 +282,9 @@ Partial Class Form1
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents webBrwsStartup As System.Windows.Forms.WebBrowser
     Friend WithEvents NotifyIcon1 As System.Windows.Forms.NotifyIcon
-    Friend WithEvents EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents btnStop As System.Windows.Forms.Button
     Friend WithEvents btnStart As System.Windows.Forms.Button
-    Friend WithEvents FileSystemWatcher1 As System.IO.FileSystemWatcher
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
 
 End Class

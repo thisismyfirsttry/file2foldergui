@@ -34,9 +34,11 @@ Public Class Form1
         ProgressBar1.Value = 0
         bgwMover.RunWorkerAsync()
     End Sub
+
     Private Sub bgwRun()
         bgwMover.RunWorkerAsync()
     End Sub
+
     Private Delegate Sub myDelegate()
 
     Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork 'background worker process for move'
@@ -82,7 +84,7 @@ Public Class Form1
         End If
     End Sub
     Private Sub bgwMover_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgwMover.ProgressChanged
-        If e.ProgressPercentage <> 0 Then
+        If e.ProgressPercentage <> 0 Then 'update progress bar
             ProgressBar1.Value = e.ProgressPercentage
         End If
         If Not e.UserState Is Nothing Then
@@ -90,7 +92,7 @@ Public Class Form1
         End If
     End Sub
     Private Sub bgwMover_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwMover.RunWorkerCompleted
-        If menuitemShowDir.Checked = True AndAlso menuitemAutoClose.Checked = True Then
+        If menuitemShowDir.Checked = True AndAlso menuitemAutoClose.Checked = True Then 'things to do when the mover completes
             Process.Start("explorer.exe", txtBoxDir.Text)
             Me.Close()
         ElseIf menuitemShowDir.Checked = True And menuitemAutoClose.Checked = False Then
@@ -99,8 +101,13 @@ Public Class Form1
             Me.Close()
         End If
         ProgressBar1.Value = 100
-        btnMove.Enabled = True
-        btnUndo.Enabled = True
+        If btnStart.Enabled = True Then
+            btnMove.Enabled = True
+            btnUndo.Enabled = True
+        Else
+            btnMove.Enabled = False
+            btnUndo.Enabled = False
+        End If
     End Sub
     Private Sub SaveLogToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveLogToolStripMenuItem.Click
         SaveFileDialog1.ShowDialog() 'saves currently shown textbox contents to log file
@@ -211,37 +218,36 @@ Public Class Form1
     End Sub
 
     Private Sub btnStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStart.Click
-        monitorFolder = New FileSystemWatcher() 'start the folder monitoring process.  disable everything else while running
-        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
-            monitorFolder.Path = txtBoxDir.Text.Trim
-        Else : Exit Sub
-        End If
-        txtBoxDir.Enabled = False
-        btnBrowse.Enabled = False
-        btnStart.Enabled = False
-        btnStop.Enabled = True
-        btnMove.Enabled = False
-        btnUndo.Enabled = False
-        monitorFolder.NotifyFilter = NotifyFilters.FileName
-        AddHandler monitorFolder.Created, AddressOf fileAdded
-        monitorFolder.EnableRaisingEvents = True
-    End Sub
-
-    Private Sub fileAdded(ByVal source As Object, ByVal e As System.IO.FileSystemEventArgs)
-        If e.ChangeType = IO.WatcherChangeTypes.Created Then 'call main thread to run bgwMover on new file
-            Dim u As New myDelegate(AddressOf bgwRun)
-            Me.Invoke(u)
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'start the time and disable all the buttons that would break something
+            Timer1.Start()
+            txtBoxDir.Enabled = False
+            btnBrowse.Enabled = False
+            btnStart.Enabled = False
+            btnStop.Enabled = True
+            btnMove.Enabled = False
+            btnUndo.Enabled = False
+            menuitemAutoClose.CheckState = False 'turn off process options if using monitor
+            menuitemShowDir.CheckState = False
+        Else : MessageBox.Show("Please enter a valid path monitor.")
+            Exit Sub
         End If
     End Sub
 
     Private Sub btnStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click
+        Timer1.Stop() 'stop the time and re-enable the buttons
         btnStart.Enabled = True
         txtBoxDir.Enabled = True
         btnBrowse.Enabled = True
-        monitorFolder.EnableRaisingEvents = False
         btnMove.Enabled = True
         btnUndo.Enabled = True
         btnStop.Enabled = False
+    End Sub
+
+    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'run bgw in delegate of main thread
+            Dim u As New myDelegate(AddressOf bgwRun)
+            Me.Invoke(u)
+        End If
     End Sub
 End Class
 
