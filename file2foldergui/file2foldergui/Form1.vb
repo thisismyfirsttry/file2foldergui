@@ -2,10 +2,13 @@
 Imports System.IO
 Imports System.Net
 Imports System.Text.RegularExpressions
+Imports System.Diagnostics
+
 
 Public Class Form1
     Dim moveItems As New BindingList(Of MoveItem)
     Dim isUndo As Boolean = False
+    Public monitorFolder As FileSystemWatcher
 
     Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click 'file browser initiate'
         FolderBrowserDialog1.ShowDialog()
@@ -83,6 +86,14 @@ Public Class Form1
         End If
     End Sub
     Private Sub bgwMover_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwMover.RunWorkerCompleted
+        If menuitemShowDir.Checked = True AndAlso menuitemAutoClose.Checked = True Then
+            Process.Start("explorer.exe", txtBoxDir.Text)
+            Me.Close()
+        ElseIf menuitemShowDir.Checked = True And menuitemAutoClose.Checked = False Then
+            Process.Start("explorer.exe", txtBoxDir.Text)
+        ElseIf menuitemAutoClose.Checked = True Then
+            Me.Close()
+        End If
         ProgressBar1.Value = 100
         btnMove.Enabled = True
         btnUndo.Enabled = True
@@ -122,6 +133,11 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.Text = " file2folder GUI v" & Application.ProductVersion.ToString
+        btnStart.Enabled = True
+        btnStop.Enabled = False
+        Me.AllowDrop = True
+        txtBoxDir.AllowDrop = True
+
         Try 'check for previous update "old" file.  delete if exists.
             If File.Exists(Application.StartupPath & "\file2foldergui.old") = True Then
                 File.Delete(Application.StartupPath & "\file2foldergui.old")
@@ -137,8 +153,7 @@ Public Class Form1
         resp.Close()
         req = Nothing
         webBrwsStartup.Navigate(url)
-        Me.AllowDrop = True
-        txtBoxDir.AllowDrop = True
+        
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
@@ -189,6 +204,78 @@ Public Class Form1
             Me.Show()
             Me.WindowState = FormWindowState.Normal
         End If
+    End Sub
+
+    Private Sub btnStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStart.Click
+        monitorFolder = New FileSystemWatcher()
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
+            monitorFolder.Path = txtBoxDir.Text.Trim
+        Else : Exit Sub
+        End If
+        txtBoxDir.Enabled = False
+        btnBrowse.Enabled = False
+        btnStart.Enabled = False
+        btnStop.Enabled = True
+        btnMove.Enabled = False
+        btnUndo.Enabled = False
+        monitorFolder.NotifyFilter = NotifyFilters.FileName
+        AddHandler monitorFolder.Created, AddressOf fileAdded
+        monitorFolder.EnableRaisingEvents = True
+    End Sub
+
+    Private Sub fileAdded(ByVal source As Object, ByVal e As System.IO.FileSystemEventArgs)
+        If e.ChangeType = IO.WatcherChangeTypes.Created Then
+            If isUndo = False Then
+                Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
+                If files.Length > 0 Then moveItems.Clear()
+                Dim i As Integer = 1
+                For Each filePath As String In files
+                    Dim fi As New FileInfo(filePath)
+                    If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Or (fi.Attributes And IO.FileAttributes.System) = IO.FileAttributes.System Then Continue For 'Check for hidden or system attribute and exclude for each'
+                    Try
+                        Dim newFolderPath As String = IO.Path.Combine(txtBoxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
+                        If Not IO.Directory.Exists(newFolderPath) Then
+                            IO.Directory.CreateDirectory(newFolderPath) 'create new directory based on filename minus extension if it does not exist'
+                        End If
+
+                        Dim mi As New MoveItem
+                        mi.OldPath = filePath
+                        mi.NewPath = IO.Path.Combine(newFolderPath, IO.Path.GetFileName(filePath))
+                        moveItems.Add(mi) 'move files by name into folders by name'
+
+
+                        IO.File.Move(mi.OldPath, mi.NewPath)
+
+                        i += 1
+                    Catch ex As Exception
+
+                    End Try
+                Next
+            Else
+                Dim i As Integer = 1
+                For Each mi As MoveItem In moveItems
+                    Try
+
+                        IO.File.Move(mi.NewPath, mi.OldPath)
+                        IO.Directory.Delete(My.Computer.FileSystem.GetParentPath(mi.NewPath))
+
+                        i += 1
+                    Catch ex As Exception
+
+                    End Try
+                Next
+            End If
+        End If
+    End Sub
+
+    Private Sub btnStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click
+        btnStart.Enabled = True
+        txtBoxDir.Enabled = True
+        btnBrowse.Enabled = True
+        monitorFolder.EnableRaisingEvents = False
+        btnMove.Enabled = True
+        btnUndo.Enabled = True
+        btnStop.Enabled = False
     End Sub
 End Class
 

@@ -33,6 +33,7 @@ Partial Class Form1
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
+        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDirInfo = New System.Windows.Forms.Label
@@ -45,7 +46,13 @@ Partial Class Form1
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
         Me.webBrwsStartup = New System.Windows.Forms.WebBrowser
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.btnStop = New System.Windows.Forms.Button
+        Me.btnStart = New System.Windows.Forms.Button
+        Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher
         Me.MenuStrip1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnBrowse
@@ -80,7 +87,7 @@ Partial Class Form1
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.OptionsToolStripMenuItem, Me.AboutToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(291, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(458, 24)
         Me.MenuStrip1.TabIndex = 4
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -100,7 +107,7 @@ Partial Class Form1
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose, Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -109,7 +116,7 @@ Partial Class Form1
         '
         Me.menuitemShowDir.CheckOnClick = True
         Me.menuitemShowDir.Name = "menuitemShowDir"
-        Me.menuitemShowDir.Size = New System.Drawing.Size(156, 22)
+        Me.menuitemShowDir.Size = New System.Drawing.Size(303, 22)
         Me.menuitemShowDir.Text = "Show directory"
         Me.menuitemShowDir.ToolTipText = "Opens the directory after processing"
         '
@@ -117,9 +124,15 @@ Partial Class Form1
         '
         Me.menuitemAutoClose.CheckOnClick = True
         Me.menuitemAutoClose.Name = "menuitemAutoClose"
-        Me.menuitemAutoClose.Size = New System.Drawing.Size(156, 22)
-        Me.menuitemAutoClose.Text = "Close after move"
+        Me.menuitemAutoClose.Size = New System.Drawing.Size(303, 22)
+        Me.menuitemAutoClose.Text = "Close after move (No undo will be available!)"
         Me.menuitemAutoClose.ToolTipText = "Closes the application after processing"
+        '
+        'EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem
+        '
+        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem.Name = "EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem"
+        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem.Size = New System.Drawing.Size(303, 22)
+        Me.EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem.Text = "Enable file system watcher for current directory"
         '
         'AboutToolStripMenuItem
         '
@@ -173,7 +186,7 @@ Partial Class Form1
         Me.txtLog.Location = New System.Drawing.Point(12, 76)
         Me.txtLog.Multiline = True
         Me.txtLog.Name = "txtLog"
-        Me.txtLog.Size = New System.Drawing.Size(238, 160)
+        Me.txtLog.Size = New System.Drawing.Size(267, 160)
         Me.txtLog.TabIndex = 9
         '
         'SaveFileDialog1
@@ -196,11 +209,46 @@ Partial Class Form1
         Me.NotifyIcon1.Text = "file2folder GUI"
         Me.NotifyIcon1.Visible = True
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.btnStop)
+        Me.GroupBox1.Controls.Add(Me.btnStart)
+        Me.GroupBox1.Location = New System.Drawing.Point(296, 76)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(150, 160)
+        Me.GroupBox1.TabIndex = 12
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "file2folder Monitor"
+        '
+        'btnStop
+        '
+        Me.btnStop.Location = New System.Drawing.Point(37, 98)
+        Me.btnStop.Name = "btnStop"
+        Me.btnStop.Size = New System.Drawing.Size(75, 23)
+        Me.btnStop.TabIndex = 1
+        Me.btnStop.Text = "Stop"
+        Me.btnStop.UseVisualStyleBackColor = True
+        '
+        'btnStart
+        '
+        Me.btnStart.Location = New System.Drawing.Point(37, 46)
+        Me.btnStart.Name = "btnStart"
+        Me.btnStart.Size = New System.Drawing.Size(75, 23)
+        Me.btnStart.TabIndex = 0
+        Me.btnStart.Text = "Start"
+        Me.btnStart.UseVisualStyleBackColor = True
+        '
+        'FileSystemWatcher1
+        '
+        Me.FileSystemWatcher1.EnableRaisingEvents = True
+        Me.FileSystemWatcher1.SynchronizingObject = Me
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(291, 297)
+        Me.ClientSize = New System.Drawing.Size(458, 297)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.webBrwsStartup)
         Me.Controls.Add(Me.txtBoxDir)
         Me.Controls.Add(Me.txtLog)
@@ -217,6 +265,8 @@ Partial Class Form1
         Me.Text = "file2folder GUI"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -242,5 +292,10 @@ Partial Class Form1
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents webBrwsStartup As System.Windows.Forms.WebBrowser
     Friend WithEvents NotifyIcon1 As System.Windows.Forms.NotifyIcon
+    Friend WithEvents EnableFileSystemWatcherForCurrentDirectoryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents btnStop As System.Windows.Forms.Button
+    Friend WithEvents btnStart As System.Windows.Forms.Button
+    Friend WithEvents FileSystemWatcher1 As System.IO.FileSystemWatcher
 
 End Class
