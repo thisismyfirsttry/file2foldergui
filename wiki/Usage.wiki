@@ -21,6 +21,8 @@ file2folder GUI has many features in comparison to the script:
  * Options for auto-closing and/or opening processed directory after moving
  * Progress tracking
  * Automatic and manual online update check
+ * Timed folder monitoring
+ * Can operate from system tray
 
 If you experience any bugs or would like to suggest a new feature, please visit the [http://code.google.com/p/file2foldergui/issues/list Issues] tab and submit it!
  
