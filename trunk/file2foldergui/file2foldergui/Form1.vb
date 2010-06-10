@@ -34,6 +34,10 @@ Public Class Form1
         ProgressBar1.Value = 0
         bgwMover.RunWorkerAsync()
     End Sub
+    Private Sub bgwRun()
+        bgwMover.RunWorkerAsync()
+    End Sub
+    Private Delegate Sub myDelegate()
 
     Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork 'background worker process for move'
         If isUndo = False Then
@@ -153,7 +157,7 @@ Public Class Form1
         resp.Close()
         req = Nothing
         webBrwsStartup.Navigate(url)
-        
+
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
@@ -207,7 +211,7 @@ Public Class Form1
     End Sub
 
     Private Sub btnStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStart.Click
-        monitorFolder = New FileSystemWatcher()
+        monitorFolder = New FileSystemWatcher() 'start the folder monitoring process.  disable everything else while running
         If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
             monitorFolder.Path = txtBoxDir.Text.Trim
         Else : Exit Sub
@@ -224,47 +228,9 @@ Public Class Form1
     End Sub
 
     Private Sub fileAdded(ByVal source As Object, ByVal e As System.IO.FileSystemEventArgs)
-        If e.ChangeType = IO.WatcherChangeTypes.Created Then
-            If isUndo = False Then
-                Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
-                If files.Length > 0 Then moveItems.Clear()
-                Dim i As Integer = 1
-                For Each filePath As String In files
-                    Dim fi As New FileInfo(filePath)
-                    If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Or (fi.Attributes And IO.FileAttributes.System) = IO.FileAttributes.System Then Continue For 'Check for hidden or system attribute and exclude for each'
-                    Try
-                        Dim newFolderPath As String = IO.Path.Combine(txtBoxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
-                        If Not IO.Directory.Exists(newFolderPath) Then
-                            IO.Directory.CreateDirectory(newFolderPath) 'create new directory based on filename minus extension if it does not exist'
-                        End If
-
-                        Dim mi As New MoveItem
-                        mi.OldPath = filePath
-                        mi.NewPath = IO.Path.Combine(newFolderPath, IO.Path.GetFileName(filePath))
-                        moveItems.Add(mi) 'move files by name into folders by name'
-
-
-                        IO.File.Move(mi.OldPath, mi.NewPath)
-
-                        i += 1
-                    Catch ex As Exception
-
-                    End Try
-                Next
-            Else
-                Dim i As Integer = 1
-                For Each mi As MoveItem In moveItems
-                    Try
-
-                        IO.File.Move(mi.NewPath, mi.OldPath)
-                        IO.Directory.Delete(My.Computer.FileSystem.GetParentPath(mi.NewPath))
-
-                        i += 1
-                    Catch ex As Exception
-
-                    End Try
-                Next
-            End If
+        If e.ChangeType = IO.WatcherChangeTypes.Created Then 'call main thread to run bgwMover on new file
+            Dim u As New myDelegate(AddressOf bgwRun)
+            Me.Invoke(u)
         End If
     End Sub
 
