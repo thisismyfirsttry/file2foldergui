@@ -22,6 +22,7 @@ Partial Class Form2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.btnOK = New System.Windows.Forms.Button
         Me.lblNewVersion = New System.Windows.Forms.Label
         Me.SuspendLayout()
@@ -51,6 +52,7 @@ Partial Class Form2
         Me.Controls.Add(Me.lblNewVersion)
         Me.Controls.Add(Me.btnOK)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form2"
         Me.Text = "Update available!"
         Me.ResumeLayout(False)
