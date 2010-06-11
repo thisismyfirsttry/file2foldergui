@@ -21,4 +21,3 @@ X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form1.reso
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Resources.resources
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.vbproj.GenerateResource.Cache
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form2.resources
-D:\file2foldergui\file2foldergui\file2foldergui\bin\Debug\file2foldergui.exe
