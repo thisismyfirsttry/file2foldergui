@@ -145,6 +145,7 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         NotifyIcon1.Icon = Me.Icon
+        NotifyIcon1.ContextMenu = contextmenuSysTray
         Me.MaximizeBox = False
         Me.Text = " file2folder GUI v" & Application.ProductVersion.ToString
         btnStart.Enabled = True
@@ -258,10 +259,6 @@ Public Class Form1
             timeLeft = 180
             Timer2.Start()
         End If
-    End Sub
-
-    Private Sub NotifyIcon1_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseClick
-        NotifyIcon1.ContextMenu = contextmenuSysTray
     End Sub
 
     Private Sub NotifyIcon1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
