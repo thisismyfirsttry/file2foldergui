@@ -36,6 +36,7 @@ Partial Class Form1
         Me.menuitemMinSysTray = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
+        Me.ReleaseNotesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDirInfo = New System.Windows.Forms.Label
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog
         Me.tooltipF2F = New System.Windows.Forms.ToolTip(Me.components)
@@ -104,7 +105,7 @@ Partial Class Form1
         'SaveLogToolStripMenuItem
         '
         Me.SaveLogToolStripMenuItem.Name = "SaveLogToolStripMenuItem"
-        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SaveLogToolStripMenuItem.Text = "Save log"
         Me.SaveLogToolStripMenuItem.ToolTipText = "Save log as text file"
         '
@@ -137,10 +138,11 @@ Partial Class Form1
         Me.menuitemMinSysTray.Name = "menuitemMinSysTray"
         Me.menuitemMinSysTray.Size = New System.Drawing.Size(288, 22)
         Me.menuitemMinSysTray.Text = "Minimize to tray"
+        Me.menuitemMinSysTray.ToolTipText = "Enable or disable minimizing to system tray"
         '
         'AboutToolStripMenuItem
         '
-        Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
+        Me.AboutToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ReleaseNotesToolStripMenuItem})
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(48, 20)
         Me.AboutToolStripMenuItem.Text = "About"
@@ -150,6 +152,14 @@ Partial Class Form1
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(175, 22)
         Me.ToolStripMenuItem1.Text = "About file2folder GUI"
+        Me.ToolStripMenuItem1.ToolTipText = "A little info about file2folder GUI"
+        '
+        'ReleaseNotesToolStripMenuItem
+        '
+        Me.ReleaseNotesToolStripMenuItem.Name = "ReleaseNotesToolStripMenuItem"
+        Me.ReleaseNotesToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.ReleaseNotesToolStripMenuItem.Text = "Release notes"
+        Me.ReleaseNotesToolStripMenuItem.ToolTipText = "View release notes for this version"
         '
         'lblDirInfo
         '
@@ -240,6 +250,7 @@ Partial Class Form1
         Me.btnStop.Size = New System.Drawing.Size(75, 23)
         Me.btnStop.TabIndex = 1
         Me.btnStop.Text = "Stop"
+        Me.tooltipF2F.SetToolTip(Me.btnStop, "Stop the folder monitor")
         Me.btnStop.UseVisualStyleBackColor = True
         '
         'btnStart
@@ -249,6 +260,7 @@ Partial Class Form1
         Me.btnStart.Size = New System.Drawing.Size(75, 23)
         Me.btnStart.TabIndex = 0
         Me.btnStart.Text = "Start"
+        Me.tooltipF2F.SetToolTip(Me.btnStart, "Start the folder monitor")
         Me.btnStart.UseVisualStyleBackColor = True
         '
         'Timer1
@@ -286,6 +298,7 @@ Partial Class Form1
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
+        Me.MaximizeBox = False
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "file2folder GUI"
@@ -327,5 +340,6 @@ Partial Class Form1
     Friend WithEvents menuitemMinSysTray As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents contextmenuSysTray As System.Windows.Forms.ContextMenu
     Friend WithEvents MenuItem1 As System.Windows.Forms.MenuItem
+    Friend WithEvents ReleaseNotesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
