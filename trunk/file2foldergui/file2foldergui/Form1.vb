@@ -274,6 +274,10 @@ Public Class Form1
     Private Sub MenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem1.Click
         Me.Close()
     End Sub
+
+    Private Sub ReleaseNotesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReleaseNotesToolStripMenuItem.Click
+        Form3.ShowDialog()
+    End Sub
 End Class
 
 Public Class MoveItem 'variables for handling undo feature
