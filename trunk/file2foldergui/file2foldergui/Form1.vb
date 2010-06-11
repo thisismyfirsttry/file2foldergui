@@ -8,7 +8,8 @@ Imports System.Diagnostics
 Public Class Form1
     Dim moveItems As New BindingList(Of MoveItem)
     Dim isUndo As Boolean = False
-    Public monitorFolder As FileSystemWatcher
+    'Dim stopwatch As New Stopwatch()
+    'Dim totalInterval As Integer = 0
 
     Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click 'file browser initiate'
         FolderBrowserDialog1.ShowDialog()
@@ -143,6 +144,7 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Me.MaximizeBox = False
         Me.Text = " file2folder GUI v" & Application.ProductVersion.ToString
         btnStart.Enabled = True
         btnStop.Enabled = False
@@ -219,7 +221,11 @@ Public Class Form1
 
     Private Sub btnStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStart.Click
         If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'start the time and disable all the buttons that would break something
+            'Timer2.Interval = 1000
+            'stopwatch.Start()
+            'Timer2.Start()
             Timer1.Start()
+            'Label1.Text = totalInterval
             txtBoxDir.Enabled = False
             btnBrowse.Enabled = False
             btnStart.Enabled = False
@@ -249,6 +255,15 @@ Public Class Form1
             Me.Invoke(u)
         End If
     End Sub
+
+    'Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
+    '    Label1.Text = Convert.ToInt32(totalInterval - stopwatch.Elapsed.TotalMilliseconds).ToString()
+
+    '    ' Check to ensure the timer stops.
+    '    If stopwatch.Elapsed.TotalMilliseconds >= totalInterval Then
+    '        stopwatch.Reset()
+    '    End If
+    'End Sub
 End Class
 
 Public Class MoveItem 'variables for handling undo feature
