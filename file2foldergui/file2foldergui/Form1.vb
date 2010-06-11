@@ -208,8 +208,13 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        If Me.WindowState = FormWindowState.Minimized Then 'send to tray on minimize
-            Me.Hide()
+        If menuitemMinSysTray.Checked = True Then
+            NotifyIcon1.Visible = True
+            If Me.WindowState = FormWindowState.Minimized Then 'send to tray on minimize
+                Me.Hide()
+            End If
+        ElseIf menuitemMinSysTray.Checked = False Then
+            NotifyIcon1.Visible = False
         End If
     End Sub
 
@@ -255,6 +260,10 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub NotifyIcon1_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseClick
+        NotifyIcon1.ContextMenu = contextmenuSysTray
+    End Sub
+
     Private Sub NotifyIcon1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
         Me.Show()
         Me.WindowState = FormWindowState.Normal
@@ -263,6 +272,10 @@ Public Class Form1
     Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
         timeLeft = timeLeft - 1
         Label1.Text = "Next run in " & timeLeft & " seconds"
+    End Sub
+
+    Private Sub MenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem1.Click
+        Me.Close()
     End Sub
 End Class
 

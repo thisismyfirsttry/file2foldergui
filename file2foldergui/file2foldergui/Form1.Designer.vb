@@ -33,6 +33,7 @@ Partial Class Form1
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
+        Me.menuitemMinSysTray = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.lblDirInfo = New System.Windows.Forms.Label
@@ -51,6 +52,8 @@ Partial Class Form1
         Me.btnStart = New System.Windows.Forms.Button
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
+        Me.contextmenuSysTray = New System.Windows.Forms.ContextMenu
+        Me.MenuItem1 = New System.Windows.Forms.MenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -107,7 +110,7 @@ Partial Class Form1
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose, Me.menuitemMinSysTray})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -127,6 +130,13 @@ Partial Class Form1
         Me.menuitemAutoClose.Size = New System.Drawing.Size(288, 22)
         Me.menuitemAutoClose.Text = "Close after move (No undo will be available!)"
         Me.menuitemAutoClose.ToolTipText = "Closes the application after processing"
+        '
+        'menuitemMinSysTray
+        '
+        Me.menuitemMinSysTray.CheckOnClick = True
+        Me.menuitemMinSysTray.Name = "menuitemMinSysTray"
+        Me.menuitemMinSysTray.Size = New System.Drawing.Size(288, 22)
+        Me.menuitemMinSysTray.Text = "Minimize to tray"
         '
         'AboutToolStripMenuItem
         '
@@ -243,11 +253,20 @@ Partial Class Form1
         '
         'Timer1
         '
-        Me.Timer1.Interval = 10000
+        Me.Timer1.Interval = 180000
         '
         'Timer2
         '
         Me.Timer2.Interval = 1000
+        '
+        'contextmenuSysTray
+        '
+        Me.contextmenuSysTray.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItem1})
+        '
+        'MenuItem1
+        '
+        Me.MenuItem1.Index = 0
+        Me.MenuItem1.Text = "Close"
         '
         'Form1
         '
@@ -305,5 +324,8 @@ Partial Class Form1
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents Timer2 As System.Windows.Forms.Timer
     Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents menuitemMinSysTray As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents contextmenuSysTray As System.Windows.Forms.ContextMenu
+    Friend WithEvents MenuItem1 As System.Windows.Forms.MenuItem
 
 End Class
