@@ -199,7 +199,6 @@ Partial Class Form1
         '
         'NotifyIcon1
         '
-        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
         Me.NotifyIcon1.Text = "file2folder GUI"
         Me.NotifyIcon1.Visible = True
         '
@@ -218,10 +217,11 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(34, 122)
+        Me.Label1.Location = New System.Drawing.Point(12, 123)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(0, 13)
+        Me.Label1.Size = New System.Drawing.Size(122, 13)
         Me.Label1.TabIndex = 2
+        Me.Label1.Text = "Next run in 180 seconds"
         '
         'btnStop
         '
@@ -243,7 +243,7 @@ Partial Class Form1
         '
         'Timer1
         '
-        Me.Timer1.Interval = 180000
+        Me.Timer1.Interval = 10000
         '
         'Timer2
         '
@@ -303,7 +303,7 @@ Partial Class Form1
     Friend WithEvents btnStop As System.Windows.Forms.Button
     Friend WithEvents btnStart As System.Windows.Forms.Button
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Timer2 As System.Windows.Forms.Timer
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 
 End Class
