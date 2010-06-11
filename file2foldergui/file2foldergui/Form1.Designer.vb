@@ -46,9 +46,11 @@ Partial Class Form1
         Me.webBrwsStartup = New System.Windows.Forms.WebBrowser
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.Label1 = New System.Windows.Forms.Label
         Me.btnStop = New System.Windows.Forms.Button
         Me.btnStart = New System.Windows.Forms.Button
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -99,7 +101,7 @@ Partial Class Form1
         'SaveLogToolStripMenuItem
         '
         Me.SaveLogToolStripMenuItem.Name = "SaveLogToolStripMenuItem"
-        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
         Me.SaveLogToolStripMenuItem.Text = "Save log"
         Me.SaveLogToolStripMenuItem.ToolTipText = "Save log as text file"
         '
@@ -203,6 +205,7 @@ Partial Class Form1
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.btnStop)
         Me.GroupBox1.Controls.Add(Me.btnStart)
         Me.GroupBox1.Location = New System.Drawing.Point(296, 76)
@@ -212,9 +215,17 @@ Partial Class Form1
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "file2folder Monitor"
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(34, 122)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(0, 13)
+        Me.Label1.TabIndex = 2
+        '
         'btnStop
         '
-        Me.btnStop.Location = New System.Drawing.Point(37, 98)
+        Me.btnStop.Location = New System.Drawing.Point(37, 84)
         Me.btnStop.Name = "btnStop"
         Me.btnStop.Size = New System.Drawing.Size(75, 23)
         Me.btnStop.TabIndex = 1
@@ -233,6 +244,10 @@ Partial Class Form1
         'Timer1
         '
         Me.Timer1.Interval = 180000
+        '
+        'Timer2
+        '
+        Me.Timer2.Interval = 1000
         '
         'Form1
         '
@@ -253,10 +268,12 @@ Partial Class Form1
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "file2folder GUI"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -286,5 +303,7 @@ Partial Class Form1
     Friend WithEvents btnStop As System.Windows.Forms.Button
     Friend WithEvents btnStart As System.Windows.Forms.Button
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Timer2 As System.Windows.Forms.Timer
 
 End Class
