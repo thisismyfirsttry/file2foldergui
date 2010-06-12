@@ -42,6 +42,8 @@ Partial Class Form1
         Me.tooltipF2F = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnUndo = New System.Windows.Forms.Button
         Me.txtBoxDir = New System.Windows.Forms.TextBox
+        Me.btnStop = New System.Windows.Forms.Button
+        Me.btnStart = New System.Windows.Forms.Button
         Me.bgwMover = New System.ComponentModel.BackgroundWorker
         Me.txtLog = New System.Windows.Forms.TextBox
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
@@ -49,11 +51,11 @@ Partial Class Form1
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.Label1 = New System.Windows.Forms.Label
-        Me.btnStop = New System.Windows.Forms.Button
-        Me.btnStart = New System.Windows.Forms.Button
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.contextmenuSysTray = New System.Windows.Forms.ContextMenu
+        Me.MenuItem2 = New System.Windows.Forms.MenuItem
+        Me.MenuItem3 = New System.Windows.Forms.MenuItem
         Me.MenuItem1 = New System.Windows.Forms.MenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -105,7 +107,7 @@ Partial Class Form1
         'SaveLogToolStripMenuItem
         '
         Me.SaveLogToolStripMenuItem.Name = "SaveLogToolStripMenuItem"
-        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SaveLogToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
         Me.SaveLogToolStripMenuItem.Text = "Save log"
         Me.SaveLogToolStripMenuItem.ToolTipText = "Save log as text file"
         '
@@ -190,6 +192,26 @@ Partial Class Form1
         Me.txtBoxDir.TabIndex = 10
         Me.tooltipF2F.SetToolTip(Me.txtBoxDir, "Manually enter or browse for a directory")
         '
+        'btnStop
+        '
+        Me.btnStop.Location = New System.Drawing.Point(37, 84)
+        Me.btnStop.Name = "btnStop"
+        Me.btnStop.Size = New System.Drawing.Size(75, 23)
+        Me.btnStop.TabIndex = 1
+        Me.btnStop.Text = "Stop"
+        Me.tooltipF2F.SetToolTip(Me.btnStop, "Stop the folder monitor")
+        Me.btnStop.UseVisualStyleBackColor = True
+        '
+        'btnStart
+        '
+        Me.btnStart.Location = New System.Drawing.Point(37, 46)
+        Me.btnStart.Name = "btnStart"
+        Me.btnStart.Size = New System.Drawing.Size(75, 23)
+        Me.btnStart.TabIndex = 0
+        Me.btnStart.Text = "Start"
+        Me.tooltipF2F.SetToolTip(Me.btnStart, "Start the folder monitor")
+        Me.btnStart.UseVisualStyleBackColor = True
+        '
         'bgwMover
         '
         Me.bgwMover.WorkerReportsProgress = True
@@ -219,6 +241,8 @@ Partial Class Form1
         '
         'NotifyIcon1
         '
+        Me.NotifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.NotifyIcon1.BalloonTipText = "file2folder GUI is running in the system tray"
         Me.NotifyIcon1.Text = "file2folder GUI"
         Me.NotifyIcon1.Visible = True
         '
@@ -243,26 +267,6 @@ Partial Class Form1
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Next run in 180 seconds"
         '
-        'btnStop
-        '
-        Me.btnStop.Location = New System.Drawing.Point(37, 84)
-        Me.btnStop.Name = "btnStop"
-        Me.btnStop.Size = New System.Drawing.Size(75, 23)
-        Me.btnStop.TabIndex = 1
-        Me.btnStop.Text = "Stop"
-        Me.tooltipF2F.SetToolTip(Me.btnStop, "Stop the folder monitor")
-        Me.btnStop.UseVisualStyleBackColor = True
-        '
-        'btnStart
-        '
-        Me.btnStart.Location = New System.Drawing.Point(37, 46)
-        Me.btnStart.Name = "btnStart"
-        Me.btnStart.Size = New System.Drawing.Size(75, 23)
-        Me.btnStart.TabIndex = 0
-        Me.btnStart.Text = "Start"
-        Me.tooltipF2F.SetToolTip(Me.btnStart, "Start the folder monitor")
-        Me.btnStart.UseVisualStyleBackColor = True
-        '
         'Timer1
         '
         Me.Timer1.Interval = 180000
@@ -273,11 +277,21 @@ Partial Class Form1
         '
         'contextmenuSysTray
         '
-        Me.contextmenuSysTray.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItem1})
+        Me.contextmenuSysTray.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItem2, Me.MenuItem3, Me.MenuItem1})
+        '
+        'MenuItem2
+        '
+        Me.MenuItem2.Index = 0
+        Me.MenuItem2.Text = "Start monitor"
+        '
+        'MenuItem3
+        '
+        Me.MenuItem3.Index = 1
+        Me.MenuItem3.Text = "Stop monitor"
         '
         'MenuItem1
         '
-        Me.MenuItem1.Index = 0
+        Me.MenuItem1.Index = 2
         Me.MenuItem1.Text = "Close"
         '
         'Form1
@@ -341,5 +355,7 @@ Partial Class Form1
     Friend WithEvents contextmenuSysTray As System.Windows.Forms.ContextMenu
     Friend WithEvents MenuItem1 As System.Windows.Forms.MenuItem
     Friend WithEvents ReleaseNotesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents MenuItem2 As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuItem3 As System.Windows.Forms.MenuItem
 
 End Class

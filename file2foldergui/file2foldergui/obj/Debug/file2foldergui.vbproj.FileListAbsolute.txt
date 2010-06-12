@@ -9,9 +9,6 @@
 \\whs\Software\Dev Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.exe
 \\whs\Software\Dev Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.xml
 \\whs\Software\Dev Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.pdb
-X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.exe
-X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.xml
-X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.pdb
 X:\VB Projects\file2foldergui\file2foldergui\bin\Debug\file2foldergui.exe
 X:\VB Projects\file2foldergui\file2foldergui\bin\Debug\file2foldergui.pdb
 X:\VB Projects\file2foldergui\file2foldergui\bin\Debug\file2foldergui.xml
@@ -19,5 +16,9 @@ X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\ResolveAssemblyReference.
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.AboutBox1.resources
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form1.resources
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Resources.resources
-X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.vbproj.GenerateResource.Cache
 X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form2.resources
+X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.Form3.resources
+X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.vbproj.GenerateResource.Cache
+X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.exe
+X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.xml
+X:\VB Projects\file2foldergui\file2foldergui\obj\Debug\file2foldergui.pdb

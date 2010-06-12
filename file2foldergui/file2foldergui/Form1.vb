@@ -4,7 +4,6 @@ Imports System.Net
 Imports System.Text.RegularExpressions
 Imports System.Diagnostics
 
-
 Public Class Form1
     Dim moveItems As New BindingList(Of MoveItem)
     Dim isUndo As Boolean = False
@@ -84,6 +83,7 @@ Public Class Form1
             Next
         End If
     End Sub
+
     Private Sub bgwMover_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgwMover.ProgressChanged
         If e.ProgressPercentage <> 0 Then 'update progress bar
             ProgressBar1.Value = e.ProgressPercentage
@@ -92,6 +92,7 @@ Public Class Form1
             txtLog.Text &= e.UserState
         End If
     End Sub
+
     Private Sub bgwMover_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwMover.RunWorkerCompleted
         If menuitemShowDir.Checked = True AndAlso menuitemAutoClose.Checked = True Then 'things to do when the mover completes
             Process.Start("explorer.exe", txtBoxDir.Text)
@@ -110,6 +111,7 @@ Public Class Form1
             btnUndo.Enabled = False
         End If
     End Sub
+
     Private Sub SaveLogToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveLogToolStripMenuItem.Click
         SaveFileDialog1.ShowDialog() 'saves currently shown textbox contents to log file
         Try
@@ -152,7 +154,6 @@ Public Class Form1
         btnStop.Enabled = False
         Me.AllowDrop = True
         txtBoxDir.AllowDrop = True
-
         Try 'check for previous update "old" file.  delete if exists.
             If File.Exists(Application.StartupPath & "\file2foldergui.old") = True Then
                 File.Delete(Application.StartupPath & "\file2foldergui.old")
@@ -168,7 +169,6 @@ Public Class Form1
         resp.Close()
         req = Nothing
         webBrwsStartup.Navigate(url)
-
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted
@@ -213,6 +213,12 @@ Public Class Form1
             NotifyIcon1.Visible = True
             If Me.WindowState = FormWindowState.Minimized Then 'send to tray on minimize
                 Me.Hide()
+                NotifyIcon1.ShowBalloonTip(1000)
+                If btnStart.Enabled = False Then
+                    NotifyIcon1.Text = "Folder monitoring is started." & vbCrLf & "Watching " & txtBoxDir.Text & "."
+                Else
+                    NotifyIcon1.Text = "Folder monitoring is stopped."
+                End If
             End If
         ElseIf menuitemMinSysTray.Checked = False Then
             NotifyIcon1.Visible = False
@@ -277,6 +283,14 @@ Public Class Form1
 
     Private Sub ReleaseNotesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReleaseNotesToolStripMenuItem.Click
         Form3.ShowDialog()
+    End Sub
+
+    Private Sub MenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem2.Click
+        btnStart.PerformClick()
+    End Sub
+
+    Private Sub MenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem3.Click
+        btnStop.PerformClick()
     End Sub
 End Class
 
