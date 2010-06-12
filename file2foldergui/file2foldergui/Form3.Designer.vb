@@ -34,6 +34,7 @@ Partial Class Form3
         Me.txtboxReleaseNotes.Multiline = True
         Me.txtboxReleaseNotes.Name = "txtboxReleaseNotes"
         Me.txtboxReleaseNotes.ReadOnly = True
+        Me.txtboxReleaseNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txtboxReleaseNotes.Size = New System.Drawing.Size(268, 210)
         Me.txtboxReleaseNotes.TabIndex = 1
         '
