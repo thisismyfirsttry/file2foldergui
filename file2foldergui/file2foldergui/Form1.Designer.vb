@@ -54,9 +54,9 @@ Partial Class Form1
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.contextmenuSysTray = New System.Windows.Forms.ContextMenu
-        Me.MenuItem2 = New System.Windows.Forms.MenuItem
-        Me.MenuItem3 = New System.Windows.Forms.MenuItem
-        Me.MenuItem1 = New System.Windows.Forms.MenuItem
+        Me.menuitemStartMon = New System.Windows.Forms.MenuItem
+        Me.menuitemStopMon = New System.Windows.Forms.MenuItem
+        Me.menuitemClose = New System.Windows.Forms.MenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -277,22 +277,22 @@ Partial Class Form1
         '
         'contextmenuSysTray
         '
-        Me.contextmenuSysTray.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItem2, Me.MenuItem3, Me.MenuItem1})
+        Me.contextmenuSysTray.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.menuitemStartMon, Me.menuitemStopMon, Me.menuitemClose})
         '
-        'MenuItem2
+        'menuitemStartMon
         '
-        Me.MenuItem2.Index = 0
-        Me.MenuItem2.Text = "Start monitor"
+        Me.menuitemStartMon.Index = 0
+        Me.menuitemStartMon.Text = "Start monitor"
         '
-        'MenuItem3
+        'menuitemStopMon
         '
-        Me.MenuItem3.Index = 1
-        Me.MenuItem3.Text = "Stop monitor"
+        Me.menuitemStopMon.Index = 1
+        Me.menuitemStopMon.Text = "Stop monitor"
         '
-        'MenuItem1
+        'menuitemClose
         '
-        Me.MenuItem1.Index = 2
-        Me.MenuItem1.Text = "Close"
+        Me.menuitemClose.Index = 2
+        Me.menuitemClose.Text = "Close"
         '
         'Form1
         '
@@ -353,9 +353,9 @@ Partial Class Form1
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents menuitemMinSysTray As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents contextmenuSysTray As System.Windows.Forms.ContextMenu
-    Friend WithEvents MenuItem1 As System.Windows.Forms.MenuItem
+    Friend WithEvents menuitemClose As System.Windows.Forms.MenuItem
     Friend WithEvents ReleaseNotesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents MenuItem2 As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuItem3 As System.Windows.Forms.MenuItem
+    Friend WithEvents menuitemStartMon As System.Windows.Forms.MenuItem
+    Friend WithEvents menuitemStopMon As System.Windows.Forms.MenuItem
 
 End Class

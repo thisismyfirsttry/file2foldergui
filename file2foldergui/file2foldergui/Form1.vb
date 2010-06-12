@@ -227,6 +227,15 @@ Public Class Form1
 
     Private Sub btnStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStart.Click
         If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'start the time and disable all the buttons that would break something
+            Dim oStream As System.IO.Stream
+            Dim oAssembly As System.Reflection.Assembly
+            Dim sIcon As String
+            Dim oBitmap As Bitmap
+            sIcon = "file2foldergui.icon-hot.ico"
+            oAssembly = System.Reflection.Assembly.LoadFrom(Application.ExecutablePath)
+            oStream = oAssembly.GetManifestResourceStream(sIcon)
+            oBitmap = CType(Image.FromStream(oStream), Bitmap)
+            NotifyIcon1.Icon = Icon.FromHandle(oBitmap.GetHicon)
             timeLeft = 180
             Label1.Text = "Next run in " & timeLeft & " seconds"
             Timer1.Start()
@@ -245,6 +254,15 @@ Public Class Form1
     End Sub
 
     Private Sub btnStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click
+        Dim oStream As System.IO.Stream
+        Dim oAssembly As System.Reflection.Assembly
+        Dim sIcon As String
+        Dim oBitmap As Bitmap
+        sIcon = "file2foldergui.icon.ico"
+        oAssembly = System.Reflection.Assembly.LoadFrom(Application.ExecutablePath)
+        oStream = oAssembly.GetManifestResourceStream(sIcon)
+        oBitmap = CType(Image.FromStream(oStream), Bitmap)
+        NotifyIcon1.Icon = Icon.FromHandle(oBitmap.GetHicon)
         Timer1.Stop() 'stop the time and re-enable the buttons
         Timer2.Stop()
         timeLeft = 179
@@ -268,29 +286,71 @@ Public Class Form1
     End Sub
 
     Private Sub NotifyIcon1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
-        Me.Show()
+        Me.Show() 'bring app back into focus from systray on double click
         Me.WindowState = FormWindowState.Normal
     End Sub
 
     Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
-        timeLeft = timeLeft - 1
+        timeLeft = timeLeft - 1 'subtract 1 from previous time and update label
         Label1.Text = "Next run in " & timeLeft & " seconds"
     End Sub
 
-    Private Sub MenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem1.Click
-        Me.Close()
-    End Sub
-
     Private Sub ReleaseNotesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReleaseNotesToolStripMenuItem.Click
-        Form3.ShowDialog()
+        Form3.ShowDialog() 'show release notes box
     End Sub
 
-    Private Sub MenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem2.Click
-        btnStart.PerformClick()
+    Private Sub menuitemClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuitemClose.Click
+        Me.Close() 'close from systray context menu
     End Sub
 
-    Private Sub MenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem3.Click
-        btnStop.PerformClick()
+    Private Sub menuitemStartMon_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuitemStartMon.Click
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'start the time and disable all the buttons that would break something.  systray context menu cmd
+            Dim oStream As System.IO.Stream
+            Dim oAssembly As System.Reflection.Assembly
+            Dim sIcon As String
+            Dim oBitmap As Bitmap
+            sIcon = "file2foldergui.icon-hot.ico"
+            oAssembly = System.Reflection.Assembly.LoadFrom(Application.ExecutablePath)
+            oStream = oAssembly.GetManifestResourceStream(sIcon)
+            oBitmap = CType(Image.FromStream(oStream), Bitmap)
+            NotifyIcon1.Icon = Icon.FromHandle(oBitmap.GetHicon)
+            timeLeft = 180
+            Label1.Text = "Next run in " & timeLeft & " seconds"
+            Timer1.Start()
+            Timer2.Start()
+            txtBoxDir.Enabled = False
+            btnBrowse.Enabled = False
+            btnStart.Enabled = False
+            btnStop.Enabled = True
+            btnMove.Enabled = False
+            btnUndo.Enabled = False
+            menuitemAutoClose.CheckState = False 'turn off process options if using monitor
+            menuitemShowDir.CheckState = False
+        Else : MessageBox.Show("Please enter a valid path monitor.")
+            Exit Sub
+        End If
+    End Sub
+
+    Private Sub menuitemStopMon_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuitemStopMon.Click
+        Dim oStream As System.IO.Stream
+        Dim oAssembly As System.Reflection.Assembly
+        Dim sIcon As String
+        Dim oBitmap As Bitmap
+        sIcon = "file2foldergui.icon.ico"
+        oAssembly = System.Reflection.Assembly.LoadFrom(Application.ExecutablePath)
+        oStream = oAssembly.GetManifestResourceStream(sIcon)
+        oBitmap = CType(Image.FromStream(oStream), Bitmap)
+        NotifyIcon1.Icon = Icon.FromHandle(oBitmap.GetHicon)
+        Timer1.Stop() 'stop the time and re-enable the buttons.  systray context menu cmd
+        Timer2.Stop()
+        timeLeft = 179
+        Label1.Text = "Next run in 180 seconds"
+        btnStart.Enabled = True
+        txtBoxDir.Enabled = True
+        btnBrowse.Enabled = True
+        btnMove.Enabled = True
+        btnUndo.Enabled = True
+        btnStop.Enabled = False
     End Sub
 End Class
 
