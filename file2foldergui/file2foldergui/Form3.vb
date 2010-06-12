@@ -9,6 +9,7 @@
         & vbCrLf & vbCrLf & "* Balloon notification when sending to system tray." _
         & vbCrLf & vbCrLf & "* Added system tray context menu for starting and stopping the folder monitor service." _
         & vbCrLf & vbCrLf & "* System tray tooltip shows currently monitored folder or states monitoring is stopped if not running." _
+        & vbCrLf & vbCrLf & "* New -hot- system tray icon when folder monitoring is running." _
         & vbCrLf & vbCrLf & "* Minor interface cleanup."
     End Sub
 End Class
