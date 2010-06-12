@@ -152,6 +152,8 @@ Public Class Form1
         Me.Text = " file2folder GUI v" & Application.ProductVersion.ToString
         btnStart.Enabled = True
         btnStop.Enabled = False
+        menuitemStartMon.Enabled = True
+        menuitemStopMon.Enabled = False
         Me.AllowDrop = True
         txtBoxDir.AllowDrop = True
         Try 'check for previous update "old" file.  delete if exists.
@@ -243,7 +245,9 @@ Public Class Form1
             txtBoxDir.Enabled = False
             btnBrowse.Enabled = False
             btnStart.Enabled = False
+            menuitemStartMon.Enabled = False
             btnStop.Enabled = True
+            menuitemStopMon.Enabled = True
             btnMove.Enabled = False
             btnUndo.Enabled = False
             menuitemAutoClose.CheckState = False 'turn off process options if using monitor
@@ -268,11 +272,13 @@ Public Class Form1
         timeLeft = 179
         Label1.Text = "Next run in 180 seconds"
         btnStart.Enabled = True
+        menuitemStartMon.Enabled = True
         txtBoxDir.Enabled = True
         btnBrowse.Enabled = True
         btnMove.Enabled = True
         btnUndo.Enabled = True
         btnStop.Enabled = False
+        menuitemStopMon.Enabled = False
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
@@ -321,7 +327,9 @@ Public Class Form1
             txtBoxDir.Enabled = False
             btnBrowse.Enabled = False
             btnStart.Enabled = False
+            menuitemStartMon.Enabled = False
             btnStop.Enabled = True
+            menuitemStopMon.Enabled = True
             btnMove.Enabled = False
             btnUndo.Enabled = False
             menuitemAutoClose.CheckState = False 'turn off process options if using monitor
@@ -346,11 +354,13 @@ Public Class Form1
         timeLeft = 179
         Label1.Text = "Next run in 180 seconds"
         btnStart.Enabled = True
+        menuitemStartMon.Enabled = True
         txtBoxDir.Enabled = True
         btnBrowse.Enabled = True
         btnMove.Enabled = True
         btnUndo.Enabled = True
         btnStop.Enabled = False
+        menuitemStopMon.Enabled = False
     End Sub
 End Class
 
