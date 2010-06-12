@@ -41,24 +41,26 @@ Public Class Form1
 
     Private Delegate Sub myDelegate()
 
-    Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork 'background worker process for move'
+    Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork
+        'background worker process for move
         If isUndo = False Then
             Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
             If files.Length > 0 Then moveItems.Clear()
             Dim i As Integer = 1
             For Each filePath As String In files
                 Dim fi As New FileInfo(filePath)
-                If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Or (fi.Attributes And IO.FileAttributes.System) = IO.FileAttributes.System Then Continue For 'Check for hidden or system attribute and exclude for each'
+                If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Or (fi.Attributes And IO.FileAttributes.System) _
+                = IO.FileAttributes.System Then Continue For 'Check for hidden or system attribute and exclude for each
                 Try
                     Dim newFolderPath As String = IO.Path.Combine(txtBoxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
                     If Not IO.Directory.Exists(newFolderPath) Then
-                        IO.Directory.CreateDirectory(newFolderPath) 'create new directory based on filename minus extension if it does not exist'
+                        IO.Directory.CreateDirectory(newFolderPath) 'create new directory based on filename minus extension if it does not exist
                     End If
 
                     Dim mi As New MoveItem
                     mi.OldPath = filePath
                     mi.NewPath = IO.Path.Combine(newFolderPath, IO.Path.GetFileName(filePath))
-                    moveItems.Add(mi) 'move files by name into folders by name'
+                    moveItems.Add(mi) 'move files by name into folders by name
 
                     bgwMover.ReportProgress((i / files.Length) * 100, "Moving """ & IO.Path.GetFileName(mi.OldPath) & """ to """ & mi.NewPath & """...")
                     IO.File.Move(mi.OldPath, mi.NewPath)
@@ -72,7 +74,8 @@ Public Class Form1
             Dim i As Integer = 1
             For Each mi As MoveItem In moveItems
                 Try
-                    bgwMover.ReportProgress((i / moveItems.Count) * 100, "Undoing """ & IO.Path.GetFileName(mi.NewPath) & """ to """ & mi.OldPath & """...") 'progress bar stuff'
+                    'progress bar stuff
+                    bgwMover.ReportProgress((i / moveItems.Count) * 100, "Undoing """ & IO.Path.GetFileName(mi.NewPath) & """ to """ & mi.OldPath & """...")
                     IO.File.Move(mi.NewPath, mi.OldPath)
                     IO.Directory.Delete(My.Computer.FileSystem.GetParentPath(mi.NewPath))
                     bgwMover.ReportProgress(0, "Done." & vbCrLf)
@@ -228,7 +231,8 @@ Public Class Form1
     End Sub
 
     Private Sub btnStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStart.Click
-        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'start the time and disable all the buttons that would break something
+        'start the time and disable all the buttons that would break something
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
             Dim oStream As System.IO.Stream
             Dim oAssembly As System.Reflection.Assembly
             Dim sIcon As String
@@ -310,7 +314,8 @@ Public Class Form1
     End Sub
 
     Private Sub menuitemStartMon_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuitemStartMon.Click
-        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then 'start the time and disable all the buttons that would break something.  systray context menu cmd
+        'start the time and disable all the buttons that would break something.  systray context menu cmd
+        If String.IsNullOrEmpty(txtBoxDir.Text.Trim) = False AndAlso IO.Directory.Exists(txtBoxDir.Text) Then
             Dim oStream As System.IO.Stream
             Dim oAssembly As System.Reflection.Assembly
             Dim sIcon As String
