@@ -5,11 +5,8 @@
     End Sub
 
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load  'latest release notes
-        txtboxReleaseNotes.Text = "Release notes for v1.4.2.0" _
-        & vbCrLf & vbCrLf & "* Balloon notification when sending to system tray." _
-        & vbCrLf & vbCrLf & "* Added system tray context menu for starting and stopping the folder monitor service." _
-        & vbCrLf & vbCrLf & "* System tray tooltip shows currently monitored folder or states monitoring is stopped if not running." _
-        & vbCrLf & vbCrLf & "* New -hot- system tray icon when folder monitoring is running." _
-        & vbCrLf & vbCrLf & "* Minor interface cleanup."
+        txtboxReleaseNotes.Text = "Release notes for v1.4.3.0" _
+        & vbCrLf & vbCrLf & "* New logo." _
+        & vbCrLf & vbCrLf & "* Rudimentary multi-part file support.  Multi-part files can be ignored so that you can handle them yourself.  File names must contain cd, dvd, part, disc or disk followed by number (ex. movie-cd1.avi)."
     End Sub
 End Class
