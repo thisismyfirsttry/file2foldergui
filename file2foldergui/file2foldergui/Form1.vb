@@ -10,6 +10,35 @@ Public Class Form1
     Dim countDown As Integer
     Dim timeLeft As Integer
 
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        NotifyIcon1.Icon = Me.Icon
+        NotifyIcon1.ContextMenu = contextmenuSysTray
+        Me.MaximizeBox = False
+        Me.Text = " file2folder GUI v" & Application.ProductVersion.ToString
+        btnStart.Enabled = True
+        btnStop.Enabled = False
+        menuitemStartMon.Enabled = True
+        menuitemStopMon.Enabled = False
+        menuitemIgnoreMP.Checked = False
+        Me.AllowDrop = True
+        txtBoxDir.AllowDrop = True
+        Try 'check for previous update "old" file.  delete if exists.
+            If File.Exists(Application.StartupPath & "\file2foldergui.old") = True Then
+                File.Delete(Application.StartupPath & "\file2foldergui.old")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+        Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
+        Dim req As WebRequest
+        req = WebRequest.Create(url)
+        Dim resp As WebResponse
+        resp = req.GetResponse()
+        resp.Close()
+        req = Nothing
+        webBrwsStartup.Navigate(url)
+    End Sub
+
     Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click 'file browser initiate'
         FolderBrowserDialog1.ShowDialog()
         txtBoxDir.Text = FolderBrowserDialog1.SelectedPath
@@ -43,7 +72,36 @@ Public Class Form1
 
     Private Sub bgwMover_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwMover.DoWork
         'background worker process for move
-        If isUndo = False Then
+        If isUndo = False AndAlso menuitemIgnoreMP.Checked = True Then 'Ignore multipart files
+            Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
+            If files.Length > 0 Then moveItems.Clear()
+            Dim i As Integer = 1
+            For Each filePath As String In files
+                Dim fi As New FileInfo(filePath)
+                Dim m As Match = Regex.Match(IO.Path.GetFileName(filePath), "(.*?)([ _.-]*(?:cd|dvd|p(?:ar)?t|dis[ck]|d)[ _.-]*[0-9]+)(.*?)(\.[^.]+)$") 'regex for multipart filename detection
+                If (fi.Attributes And IO.FileAttributes.Hidden) = IO.FileAttributes.Hidden Or (fi.Attributes And IO.FileAttributes.System) _
+                = IO.FileAttributes.System Or m.Success = True Then Continue For 'Check for hidden or system attribute, multipart filename regex match and exclude for each
+                Try
+                    Dim newFolderPath As String = IO.Path.Combine(txtBoxDir.Text.Trim, IO.Path.GetFileNameWithoutExtension(filePath))
+                    If Not IO.Directory.Exists(newFolderPath) Then
+                        IO.Directory.CreateDirectory(newFolderPath) 'create new directory based on filename minus extension if it does not exist
+                    End If
+
+                    Dim mi As New MoveItem
+                    mi.OldPath = filePath
+                    mi.NewPath = IO.Path.Combine(newFolderPath, IO.Path.GetFileName(filePath))
+                    moveItems.Add(mi) 'move files by name into folders by name
+
+                    bgwMover.ReportProgress((i / files.Length) * 100, "Moving """ & IO.Path.GetFileName(mi.OldPath) & """ to """ & mi.NewPath & """...")
+                    IO.File.Move(mi.OldPath, mi.NewPath)
+                    bgwMover.ReportProgress(0, "Done." & vbCrLf)
+                    i += 1
+                Catch ex As Exception
+                    bgwMover.ReportProgress(0, "Error: " & ex.Message & vbCrLf)
+                End Try
+            Next
+
+        ElseIf isUndo = False AndAlso menuitemIgnoreMP.Checked = False Then 'move all files
             Dim files() As String = IO.Directory.GetFiles(txtBoxDir.Text.Trim)
             If files.Length > 0 Then moveItems.Clear()
             Dim i As Integer = 1
@@ -70,6 +128,7 @@ Public Class Form1
                     bgwMover.ReportProgress(0, "Error: " & ex.Message & vbCrLf)
                 End Try
             Next
+
         Else
             Dim i As Integer = 1
             For Each mi As MoveItem In moveItems
@@ -85,6 +144,7 @@ Public Class Form1
                 End Try
             Next
         End If
+
     End Sub
 
     Private Sub bgwMover_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgwMover.ProgressChanged
@@ -146,34 +206,6 @@ Public Class Form1
         If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then 'detect data dragged into form
             e.Effect = DragDropEffects.All
         End If
-    End Sub
-
-    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        NotifyIcon1.Icon = Me.Icon
-        NotifyIcon1.ContextMenu = contextmenuSysTray
-        Me.MaximizeBox = False
-        Me.Text = " file2folder GUI v" & Application.ProductVersion.ToString
-        btnStart.Enabled = True
-        btnStop.Enabled = False
-        menuitemStartMon.Enabled = True
-        menuitemStopMon.Enabled = False
-        Me.AllowDrop = True
-        txtBoxDir.AllowDrop = True
-        Try 'check for previous update "old" file.  delete if exists.
-            If File.Exists(Application.StartupPath & "\file2foldergui.old") = True Then
-                File.Delete(Application.StartupPath & "\file2foldergui.old")
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-        Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
-        Dim req As WebRequest
-        req = WebRequest.Create(url)
-        Dim resp As WebResponse
-        resp = req.GetResponse()
-        resp.Close()
-        req = Nothing
-        webBrwsStartup.Navigate(url)
     End Sub
 
     Public Sub webBrwsStartup_DocumentCompleted(ByVal sender As System.Object, ByVal e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles webBrwsStartup.DocumentCompleted

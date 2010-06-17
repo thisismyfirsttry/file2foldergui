@@ -33,6 +33,7 @@ Partial Class Form1
         Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemShowDir = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemAutoClose = New System.Windows.Forms.ToolStripMenuItem
+        Me.menuitemIgnoreMP = New System.Windows.Forms.ToolStripMenuItem
         Me.menuitemMinSysTray = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
@@ -113,7 +114,7 @@ Partial Class Form1
         '
         'OptionsToolStripMenuItem
         '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose, Me.menuitemMinSysTray})
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuitemShowDir, Me.menuitemAutoClose, Me.menuitemIgnoreMP, Me.menuitemMinSysTray})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
         Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
         Me.OptionsToolStripMenuItem.Text = "Options"
@@ -133,6 +134,15 @@ Partial Class Form1
         Me.menuitemAutoClose.Size = New System.Drawing.Size(288, 22)
         Me.menuitemAutoClose.Text = "Close after move (No undo will be available!)"
         Me.menuitemAutoClose.ToolTipText = "Closes the application after processing"
+        '
+        'menuitemIgnoreMP
+        '
+        Me.menuitemIgnoreMP.CheckOnClick = True
+        Me.menuitemIgnoreMP.Name = "menuitemIgnoreMP"
+        Me.menuitemIgnoreMP.Size = New System.Drawing.Size(288, 22)
+        Me.menuitemIgnoreMP.Text = "Ignore multi-part files"
+        Me.menuitemIgnoreMP.ToolTipText = "Ignore files containing CD, DVD, Part, Disc or Disk followed by number in the tit" & _
+            "le"
         '
         'menuitemMinSysTray
         '
@@ -222,6 +232,8 @@ Partial Class Form1
         Me.txtLog.Location = New System.Drawing.Point(12, 76)
         Me.txtLog.Multiline = True
         Me.txtLog.Name = "txtLog"
+        Me.txtLog.ReadOnly = True
+        Me.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txtLog.Size = New System.Drawing.Size(267, 160)
         Me.txtLog.TabIndex = 9
         '
@@ -357,5 +369,6 @@ Partial Class Form1
     Friend WithEvents ReleaseNotesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents menuitemStartMon As System.Windows.Forms.MenuItem
     Friend WithEvents menuitemStopMon As System.Windows.Forms.MenuItem
+    Friend WithEvents menuitemIgnoreMP As System.Windows.Forms.ToolStripMenuItem
 
 End Class
