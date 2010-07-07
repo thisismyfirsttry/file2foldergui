@@ -244,7 +244,7 @@ Partial Class Form1
         '
         'webBrwsStartup
         '
-        Me.webBrwsStartup.Location = New System.Drawing.Point(12, 271)
+        Me.webBrwsStartup.Location = New System.Drawing.Point(386, 271)
         Me.webBrwsStartup.MinimumSize = New System.Drawing.Size(20, 20)
         Me.webBrwsStartup.Name = "webBrwsStartup"
         Me.webBrwsStartup.Size = New System.Drawing.Size(60, 23)

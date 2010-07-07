@@ -29,14 +29,19 @@ Public Class Form1
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-        Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
-        Dim req As WebRequest
-        req = WebRequest.Create(url)
-        Dim resp As WebResponse
-        resp = req.GetResponse()
-        resp.Close()
-        req = Nothing
-        webBrwsStartup.Navigate(url)
+        Try
+            Dim url As New System.Uri("http://update.thehtpc.net/file2foldergui/UpdateVersion.txt") 'update check on application launch.  ignore errors.'
+            Dim req As WebRequest
+            req = WebRequest.Create(url)
+            Dim resp As WebResponse
+            resp = req.GetResponse()
+            resp.Close()
+            req = Nothing
+            webBrwsStartup.Navigate(url)
+        Catch ex As Exception
+            MessageBox.Show("There seems to be a problem with your Internet connection." & vbCrLf & "Update check failed.  Click OK to continue.")
+        End Try
+        
     End Sub
 
     Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click 'file browser initiate'
